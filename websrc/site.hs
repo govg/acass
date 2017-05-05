@@ -4,7 +4,7 @@ import           Data.Monoid (mappend)
 import           Hakyll
 import	qualified Data.Set as S
 import			 Text.Pandoc.Options
-
+import			 Skylighting.Styles (pygments, zenburn)
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -91,6 +91,8 @@ pandocMathCompiler =
         newExtensions = foldr S.insert defaultExtensions mathExtensions
         writerOptions = defaultHakyllWriterOptions {
                           writerExtensions = newExtensions,
+						  writerHighlight = True,
+						  writerHighlightStyle = zenburn,
                           writerHTMLMathMethod = MathJax ""
                         }
     in pandocCompilerWith defaultHakyllReaderOptions writerOptions
