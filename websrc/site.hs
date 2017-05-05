@@ -9,6 +9,7 @@ import			 Text.Pandoc.Options
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
+
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
@@ -17,10 +18,54 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
+    match "Codes/*" $ do
+        route $ setExtension "html"
+        compile $ pandocMathCompiler
+            >>= loadAndApplyTemplate "templates/post.html"    postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
+    match "Slides/*" $ do
+        route $ setExtension "html"
+        compile $ pandocMathCompiler
+            >>= loadAndApplyTemplate "templates/post.html"    postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
+    match "resources.md" $ do
+        route   $ setExtension "html"
+        compile $ pandocMathCompiler
+            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= relativizeUrls
+
     match "index.md" $ do
         route $ setExtension "html"
         compile $ do 
 			posts <- recentFirst =<< loadAll "Misc/*"
+			let indexCtx =
+				listField "posts" postCtx (return posts) `mappend`
+				defaultContext
+			pandocMathCompiler >>= applyAsTemplate indexCtx
+				>>= loadAndApplyTemplate "templates/files.html" indexCtx
+				>>= loadAndApplyTemplate "templates/default.html" indexCtx
+				>>= relativizeUrls
+
+    match "codes.md" $ do
+        route $ setExtension "html"
+        compile $ do 
+			posts <- recentFirst =<< loadAll "Codes/*"
+			let indexCtx =
+				listField "posts" postCtx (return posts) `mappend`
+				defaultContext
+			pandocMathCompiler >>= applyAsTemplate indexCtx
+				>>= loadAndApplyTemplate "templates/files.html" indexCtx
+				>>= loadAndApplyTemplate "templates/default.html" indexCtx
+				>>= relativizeUrls
+
+    match "slides.md" $ do
+        route $ setExtension "html"
+        compile $ do 
+			posts <- recentFirst =<< loadAll "Slides/*"
 			let indexCtx =
 				listField "posts" postCtx (return posts) `mappend`
 				defaultContext
