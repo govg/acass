@@ -3,3 +3,6 @@ websrc/_cache
 websrc/.stack-work/
 websrc/_site
 websrc/templates/_cache
+websrc/css/
+websrc/images/
+
