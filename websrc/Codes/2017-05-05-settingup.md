@@ -11,17 +11,24 @@ For this, the prereqs are:
 - Access to internet (or a local copy of the course Docker image)
 
 
-We will mainly be working in Python. To get started, 
+You'll have to first install Docker. Depending on what particular 
+OS you use, the instructions may vary. On Linux, you can usually
+find it in your package manager. Once installed, you will have
+to enable the service. 
 
-``` python
+You should ideally take these steps after installation: 
 
-import numpy as np
-import matplotlib.pyplot as plt
+``` sh
 
-def test():
-	print ("Test")
-x = np.ndarray((10,1))
+sudo groupadd docker
+sudo usermod -aG docker username
+sudo systemctl enable docker
+docker run hello-world
 
 ```
+
+
+Once this is done, download the dockerfile provided [here]() and build it.
+Alternatively, the local image link is [here]().
 
 
