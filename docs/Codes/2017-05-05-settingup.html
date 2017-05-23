@@ -45,6 +45,20 @@
 <h2 id="scikit-learn-and-jupyter">Scikit-Learn and Jupyter</h2>
 <p><a href="http://scikit-learn.org/">Scikit-learn</a> is a Python library that has optimized routines for most popular machine learning techniques. We shall be using their methods as our reference implementation for whatever is taught in class.</p>
 <p><a href="http://jupyter.org/">Jupyter</a> is an interactive environment to program in many languages, including Python. We shall use this as our IDE of choice. It allows easy plotting, coding, and testing environments, and allows us to distribute our work efficiently.</p>
+<p>A basic start to Jupyter / Python is given below :</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
+<span class="im">import</span> sklearn <span class="im">as</span> sk
+<span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt
+
+X <span class="op">=</span> np.random.rand(<span class="dv">100</span>,<span class="dv">2</span>)
+
+plt.scatter(X[:,<span class="dv">0</span>], X[:,<span class="dv">1</span>])
+plt.show()</code></pre></div>
+<p>The above should generate a plot similar to :</p>
+<div class="figure">
+<img src="../images/setup.png" />
+
+</div>
 
 
         </div>
