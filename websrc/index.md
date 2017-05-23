@@ -7,14 +7,14 @@ This is the course web page for the ACA Summer school module : Machine Learning
 Theory and Practice. Please follow the links you can see around you to navigate.
 
 
-### Tentative Schedule 
+### Tentative Schedule  : 
 
-1. Basics of Linear Algebra, Probability, introduction to course
-2. Supervised learning - learning by taking decisions
-3. Supervised learning - learning by drawing lines
-4. Supervised learning - learning to predict coin tosses, bayesian methods
-5. Supervised learning - Bayesian methods contd. Priors and posteriors
-6. Supervised learning - Perceptrons, SVMs
+1. Introduction to the course - Logistics, Background
+2. Machine Learning Basics - Gradients, Inversions, Similarities
+3. Supervised learning - learning via proximity - KNN
+4. Supervised learning - learning via decisions - Decision Trees and Forests
+5. Supervised learning - learning via curve fitting - Linear Regression
+6. Supervised learning - learning via bayes rule - Bayesian models
 7. Unsupervised learning - learning to group objects, PCA
 8. Feature engineering - how to make sense of images (and maybe audio)
 9. Feature engineering - how to make sense of text

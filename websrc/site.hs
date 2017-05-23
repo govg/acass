@@ -65,7 +65,7 @@ main = hakyll $ do
     match "slides.md" $ do
         route $ setExtension "html"
         compile $ do 
-			posts <- recentFirst =<< loadAll "Slides/*"
+			posts <- chronological =<< loadAll "Slides/*"
 			let indexCtx =
 				listField "posts" postCtx (return posts) `mappend`
 				defaultContext
