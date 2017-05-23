@@ -12,13 +12,13 @@ Theory and Practice. Please follow the links you can see around you to navigate.
 1. Introduction to the course - Logistics, Background
 2. Machine Learning Basics - Gradients, Inversions, Similarities
 3. Supervised learning - learning via proximity - KNN
-4. Supervised learning - learning via decisions - Decision Trees and Forests
-5. Supervised learning - learning via curve fitting - Linear Regression
-6. Supervised learning - learning via bayes rule - Bayesian models
+3. Supervised learning - learning via decisions - Decision Trees and Forests
+4. Supervised learning - learning via curve fitting - Linear Regression
+5. Supervised learning - learning via bayes rule - Bayesian models
 7. Unsupervised learning - learning to group objects, PCA
 8. Feature engineering - how to make sense of images (and maybe audio)
 9. Feature engineering - how to make sense of text
-10. Course wrap up, future directions, special topics
+10. Practical ML - When and why 100% accuracy is bad
 
 ### Before the course
 
