@@ -52,4 +52,20 @@ our IDE of choice. It allows easy plotting, coding, and testing
 environments, and allows us to distribute our work efficiently.
 
 
+A basic start to Jupyter / Python is given below : 
+
+``` python
+import numpy as np
+import sklearn as sk
+import matplotlib.pyplot as plt
+
+X = np.random.rand(100,2)
+
+plt.scatter(X[:,0], X[:,1])
+plt.show()
+```
+
+The above should generate a plot similar to :
+
+![](../images/setup.png)
 
