@@ -22,7 +22,7 @@
         </div>
 
         <div id="content">
-            <h1>ML - Day 1</h1>
+            <h1>Introduction - Logistics and Background</h1>
             <div class="info">
     Posted on May 29, 2017
     
@@ -107,7 +107,7 @@
 <li>Training (Learning your model from data)</li>
 <li>Testing (Using your model on new data)</li>
 </ul>
-<h3 id="questions-that-we-need-to-ask">Questions that we need to ask :</h3>
+<h2 id="questions-that-we-need-to-ask">Questions that we need to ask :</h2>
 <ol style="list-style-type: decimal">
 <li>How do you get this data? (Feature engineering)</li>
 <li>How do you choose an appropriate model? (Model selection)</li>
@@ -125,6 +125,22 @@
 <li>Learn a mapping from data -&gt; attributes</li>
 <li>Figure out how this could have been generated</li>
 </ul>
+<h2 id="supervised-learning-examples">Supervised Learning : Examples</h2>
+<h3 id="classification">Classification</h3>
+<ul>
+<li>Is this orange good or bad?</li>
+<li>Will Real Madrid win the Champions League or not?</li>
+</ul>
+<h3 id="regression">Regression</h3>
+<ul>
+<li>How much will this house sell for?</li>
+<li>How many points will Chelsea obtain next season?</li>
+</ul>
+<h3 id="labelling">Labelling</h3>
+<ul>
+<li>Decide relevant tags for a Wikipedia article</li>
+<li>Decide relevant topics for a book</li>
+</ul>
 <h2 id="unsupervised-learning">Unsupervised Learning</h2>
 <p>Find out patterns, modify the data automatically. What do we have?</p>
 <ul>
@@ -135,14 +151,29 @@
 <li>Learn some structure within the data</li>
 <li>Maybe as an intermediate step for later usage?</li>
 </ul>
+<h2 id="unsupervised-learning-examples">Unsupervised Learning : Examples</h2>
+<h3 id="clustering">Clustering</h3>
+<ul>
+<li>What styles of football teams exist?</li>
+<li>What kinds of fruit are available?</li>
+</ul>
+<h3 id="density-estimation">Density estimation</h3>
+<ul>
+<li>What probability distribution does this data belong to?</li>
+</ul>
+<h3 id="dimensionality-reduction">Dimensionality reduction</h3>
+<ul>
+<li>How do I extract meaningful data from a large set?</li>
+<li>How can we know what the important or “useful” subsets of data are?</li>
+</ul>
 <h2 id="the-mathematics">The Mathematics</h2>
 <p>For ease of use, we’ll always refer consider two phases :</p>
 <ul>
-<li>Training the model : Collect the data, initialize the model, and hopefully “learn” something meaningful</li>
-<li><p>Testing the model : Obtain the trained model, get new data in some form, make new predictions</p></li>
-<li>Features : These describe what data we have</li>
-<li>Parameters and hyperparameters : These describe our models</li>
-<li><p>Loss : Define how good / bad our model is</p></li>
+<li><strong>Training</strong> the model : Collect the data, initialize the model, and hopefully “learn” something meaningful</li>
+<li><p><strong>Testing</strong> the model : Obtain the trained model, get new data in some form, make new predictions</p></li>
+<li><strong>Features</strong> : These describe what data we have</li>
+<li><strong>Parameters</strong> and hyperparameters : These describe our models</li>
+<li><p><strong>Loss</strong> : Define how good / bad our model is</p></li>
 </ul>
 <h2 id="training-a-model">Training a model</h2>
 <p>What steps do we take to train a model?</p>
@@ -166,7 +197,43 @@
 <li>Healthcare Monitoring - Clinical systems</li>
 </ul>
 <h1 id="code">Code</h1>
+<h2 id="policy">Policy</h2>
+<p>No code for this lecture, but further lectures will have associated code. Will be provided in the form of an IPython notebook, for ease of use and reproducibility.</p>
 <h1 id="references">References</h1>
+<h2 id="optional-reading">Optional reading</h2>
+<ul>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec1_slides.pdf">Lecture 1, CS771A - IIT Kanpur</a></li>
+<li><a href="https://www.cse.iitk.ac.in/users/piyush/courses/ml_autumn16/jordan_science.pdf">Review paper in Science Journal</a></li>
+</ul>
+<h2 id="next-class">Next class</h2>
+<p>Overview of mathematics - Linear Algebra, Probability</p>
+<h1 id="next-class-overview">Next class Overview</h1>
+<h2 id="linear-algebra">Linear Algebra</h2>
+<p>What you must be comfortable with :</p>
+<ul>
+<li>Matrices</li>
+<li>Vectors</li>
+<li>Dot products and norms</li>
+</ul>
+<h2 id="probability">Probability</h2>
+<ul>
+<li><span class="math inline">\(P(a) = \frac{n(a)}{n(a) + n(a')}\)</span></li>
+<li>Bayes Theorem</li>
+<li>Random variables and expectations</li>
+</ul>
+<h2 id="functions---shapes-optima">Functions - Shapes, Optima</h2>
+<h3 id="shape-of-a-function">Shape of a function</h3>
+<ul>
+<li>Convex : Unique minima, easy to find the best point</li>
+<li>Non-convex : Weird structure, hard to optimize</li>
+<li>Smooth vs non-Smooth : Theoretical guarantees on how fast we can find a best point</li>
+</ul>
+<h3 id="optima-finding">Optima finding</h3>
+<ul>
+<li>Gradient descent : Follow the slope</li>
+<li>For simple functions, we can derive the gradients easily by hand</li>
+<li>Iteratively find the optima using gradients!</li>
+</ul>
 
 
         </div>
