@@ -29,9 +29,19 @@ Theory and Practice. Please follow the links you can see around you to navigate.
  the department. Or find a partner who has a laptop and brings it to class!
 
 
-### During the course
+### Announcements and links
 
-- To be filled in later.
+
+- [Pre-course survey](http://www.goo.gl/2hZlzo) - Please fill up this form, it lets me send
+you course emails directly, and also adjust the course contents according to 
+student demographic.
+
+
+- [Permanent Feedback](http://www.goo.gl/6o9sC8) - Please let me know of any complaints / feedback you may
+have about the course (method of delivery, matter delivered). You can choose to
+identify yourself if you wish.
+
+
 
 
 

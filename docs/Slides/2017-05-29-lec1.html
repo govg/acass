@@ -22,7 +22,7 @@
         </div>
 
         <div id="content">
-            <h1>Introduction to the course - Logistics, Background</h1>
+            <h1>ML - Day 1</h1>
             <div class="info">
     Posted on May 29, 2017
     
@@ -30,10 +30,143 @@
     
 </div>
 
-<p><a href="lec1.pdf">Lecture slides in pdf form</a></p>
-<h3 id="content">Content</h3>
-<h3 id="code">Code</h3>
-<h3 id="references">References</h3>
+<h1 id="introduction">Introduction</h1>
+<h2 id="rules-and-administration">Rules and Administration</h2>
+<ul>
+<li>Please keep your ID cards handy, only registered participants allowed</li>
+<li>Feel free to use the KD Ground floor lab</li>
+<li>Treat the department nicely and follow rules posted all around</li>
+</ul>
+<h2 id="logistics">Logistics</h2>
+<ul>
+<li>Classes held 1900 - 2030 weekdays, KD101</li>
+<li>Instructor - Govind Gopakumar (Govind, no sir / bhaiyya)</li>
+<li>Contact - govindg@cse.iitk.ac.in</li>
+<li>Webpage - govg.github.io/acass</li>
+</ul>
+<h2 id="course-outline">Course Outline</h2>
+<ul>
+<li>10 lectures * 1.5 hours each</li>
+<li>Online quizzes</li>
+<li>Projects for students with prior exposure (totally optional)</li>
+<li>Tentative curriculum has been put up on the websites</li>
+<li>Open to suggestions about additional material / substitutes</li>
+</ul>
+<h2 id="course-goals-and-outcomes">Course goals and outcomes</h2>
+<ul>
+<li>Understand basic tools in Machine Learning</li>
+<li>Recognize the need and suitability of models</li>
+<li>Be able to apply basic techniques and get reasonable results</li>
+<li>Have enough background to explore advanced methods, maybe research</li>
+<li>Read articles about the dangers of AI in newspapers and understand why they’re (probably) wrong.</li>
+</ul>
+<h2 id="origins-of-machine-learning-ai">Origins of Machine Learning / AI</h2>
+<ul>
+<li>Game playing bots - ’52 A bot could play checkers</li>
+<li>Model of a neuron - ’59 A toy model of a neuron was genrated</li>
+<li>Statistical models - ’43 German Tank problem</li>
+</ul>
+<p>All of these come together and now, we know them by the general terms Artificial Intelligence, Machine Learning, Data Science</p>
+<h1 id="machine-learning-the-present">Machine Learning : the present</h1>
+<h2 id="teaching-computers-to-think">Teaching Computers to think</h2>
+<p>“When we write programs that ‘learn’, it turns out that we do and they don’t.” - Alan Perils</p>
+<ul>
+<li>YouTube tells us what video to watch next</li>
+<li>Google gives us relevant search queries</li>
+<li>Amazon tells us what to buy next</li>
+</ul>
+<p>All of these are examples of Machine learning in action!</p>
+<p>Common element - Some form of data, expectation of some trend</p>
+<ul>
+<li>Machine Learning is modelling this trend using data</li>
+</ul>
+<h2 id="what-constitutes-trend-and-data">What constitutes trend and data?</h2>
+<ul>
+<li>Genre of video, your past watch history, general trends in region</li>
+<li>Search input query, related terms</li>
+<li>Your recent purchases, demographic, history</li>
+</ul>
+<p>How would you model this information? How would you make predictions?</p>
+<h2 id="detailed-system---autonomous-drones">Detailed system - autonomous drones</h2>
+<ul>
+<li>Drone needs to fly on its own</li>
+<li>Avoid obstacles, birds of prey</li>
+<li>Automatically account for wind changes, speeds</li>
+</ul>
+<p>Involved systems :</p>
+<ul>
+<li>Vision : Recognize sky, earth, birds, other flying objects</li>
+<li>Control : Strategy to avoid these things, maintain speed</li>
+<li>Path planning : How to get from point A to point B fast</li>
+</ul>
+<p>All these involve some form or the other of Machine Learning!</p>
+<h2 id="formal-description-of-machine-learning">Formal description of Machine Learning</h2>
+<ul>
+<li>Data (Denoted by D, N)</li>
+<li>Model (Denoted generally by w)</li>
+<li>Training (Learning your model from data)</li>
+<li>Testing (Using your model on new data)</li>
+</ul>
+<h3 id="questions-that-we-need-to-ask">Questions that we need to ask :</h3>
+<ol style="list-style-type: decimal">
+<li>How do you get this data? (Feature engineering)</li>
+<li>How do you choose an appropriate model? (Model selection)</li>
+<li>How do you train this efficiently? (Optimization and Learning)</li>
+<li>How do you use this model? (Inference)</li>
+</ol>
+<h2 id="supervised-learning">Supervised Learning</h2>
+<p>Predict an outcome, a value, or a class. What do we have?</p>
+<ul>
+<li>Data, in form of numbers, words</li>
+<li>Attribute of data that needs to be predicted / learnt (label, value)</li>
+</ul>
+<p>What is our goal?</p>
+<ul>
+<li>Learn a mapping from data -&gt; attributes</li>
+<li>Figure out how this could have been generated</li>
+</ul>
+<h2 id="unsupervised-learning">Unsupervised Learning</h2>
+<p>Find out patterns, modify the data automatically. What do we have?</p>
+<ul>
+<li>Data, in raw form</li>
+</ul>
+<p>What is our goal?</p>
+<ul>
+<li>Learn some structure within the data</li>
+<li>Maybe as an intermediate step for later usage?</li>
+</ul>
+<h2 id="the-mathematics">The Mathematics</h2>
+<p>For ease of use, we’ll always refer consider two phases :</p>
+<ul>
+<li>Training the model : Collect the data, initialize the model, and hopefully “learn” something meaningful</li>
+<li><p>Testing the model : Obtain the trained model, get new data in some form, make new predictions</p></li>
+<li>Features : These describe what data we have</li>
+<li>Parameters and hyperparameters : These describe our models</li>
+<li><p>Loss : Define how good / bad our model is</p></li>
+</ul>
+<h2 id="training-a-model">Training a model</h2>
+<p>What steps do we take to train a model?</p>
+<ul>
+<li>Clean up the data : Digestible by our model</li>
+<li>Set up some sort of measure of training (loss function, objective)</li>
+<li>Start training !</li>
+</ul>
+<p>This is where words like “gradient descent” and “optimization” come in.</p>
+<p>We need to find a right setting of parameters that do well by our measure.</p>
+<h2 id="toy-example---2d-classification">Toy example - 2D Classification</h2>
+<p>Input Data : points in 2D space, with labels</p>
+<p>Model selected : Straight line (unknown slope, offset)</p>
+<p>Train time - Find proper splitting</p>
+<p>Test time - Assign label to a new point</p>
+<h1 id="machine-learning-the-future">Machine Learning : The Future</h1>
+<h2 id="current-applications">Current applications</h2>
+<ul>
+<li>Machine Translation in real time - Google Keyboard</li>
+<li>Autonomous Driving - Google, Uber</li>
+<li>Healthcare Monitoring - Clinical systems</li>
+</ul>
+<h1 id="code">Code</h1>
+<h1 id="references">References</h1>
 
 
         </div>

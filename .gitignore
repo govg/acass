@@ -5,4 +5,5 @@ websrc/_site
 websrc/templates/_cache
 websrc/css/
 websrc/images/
+temp/
 
