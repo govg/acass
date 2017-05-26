@@ -27,7 +27,6 @@ Theory and Practice. Please follow the links you can see around you to navigate.
 you course emails directly, and also adjust the course contents according to 
 student demographic.
 
-
 - [Permanent Feedback](http://www.goo.gl/6o9sC8) - Please let me know of any complaints / feedback you may
 have about the course (method of delivery, matter delivered). You can choose to
 identify yourself if you wish.
