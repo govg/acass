@@ -38,6 +38,18 @@
 <li>Project ideas and partners</li>
 <li>Installation of Jupyter / IPython notebook</li>
 </ul>
+<h2 id="recap">Recap</h2>
+<h3 id="machine-learning">Machine Learning</h3>
+<ul>
+<li>Trends in data</li>
+<li>Using the right model, and reasonable loss functions</li>
+<li>Transforming the problem according to simplicity</li>
+</ul>
+<h3 id="divisions-in-machine-learning">Divisions in Machine Learning</h3>
+<ul>
+<li>Unsupervised learning : goal is to discover patterns in data</li>
+<li>Supervised learning : goal is to predict some aspect using data</li>
+</ul>
 <h1 id="overview">Overview</h1>
 <h2 id="notations">Notations</h2>
 <h3 id="dealing-with-data">Dealing with data :</h3>
@@ -54,10 +66,14 @@
 </ul>
 <h2 id="mathematics-in-machine-learning">Mathematics in Machine Learning</h2>
 <ul>
-<li>How do we describe and manipulate data?</li>
-<li>How do we “model” something?</li>
-<li>How do we analytically solve models?</li>
-<li>How do we mathematically “learn”?</li>
+<li><p>How do we describe and manipulate data?</p>
+<p>Use a matrix!</p></li>
+<li><p>How do we “model” something?</p>
+<p>Use a vector, or a function!</p></li>
+<li><p>How do we analytically solve models?</p>
+<p>Use Linear Algebra!</p></li>
+<li><p>How do we mathematically “learn”?</p>
+<p>Use Calculus, Linear Algebra!</p></li>
 </ul>
 <h1 id="probability">Probability</h1>
 <h2 id="basics">Basics</h2>
@@ -86,18 +102,6 @@
 <li>Examples include normal, beta, poisson</li>
 <li>Integrate to 1</li>
 </ul>
-<h2 id="bayes-theorem">Bayes theorem</h2>
-<h3 id="invert-the-event">Invert the event!</h3>
-<ul>
-<li>Reverse the probability of events</li>
-<li><span class="math inline">\(P(a | b) = \frac{P(b|a)P(a)}{P(b)}\)</span></li>
-</ul>
-<h3 id="terms-in-this-expression">Terms in this expression</h3>
-<ul>
-<li><span class="math inline">\(P(a|b)\)</span> - called the posterior</li>
-<li><span class="math inline">\(P(b|a)\)</span> - called the likelihood</li>
-<li><span class="math inline">\(P(a)\)</span> - called the prior</li>
-</ul>
 <h2 id="distributions---i">Distributions - I</h2>
 <h3 id="continuous">Continuous</h3>
 <ul>
@@ -116,13 +120,53 @@
 <ul>
 <li><span class="math inline">\(p(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{\frac{-1}{2\sigma^2} (x-\mu)^2}\)</span></li>
 <li><span class="math inline">\(\mu\)</span> : Mean of the distribution</li>
-<li><span class="math inline">\(\simga^2\)</span> : Variance of the distribution</li>
+<li><span class="math inline">\(\sigma^2\)</span> : Variance of the distribution</li>
 </ul>
 <h3 id="multivariate-gaussian">Multivariate Gaussian :</h3>
 <ul>
 <li><span class="math inline">\(p(x) = \frac{1}{\sqrt{2\pi^k |\Sigma|}} e^{\frac{-1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)}\)</span></li>
 <li><span class="math inline">\(\mu\)</span> : Mean vector</li>
 <li><span class="math inline">\(\Sigma\)</span> : Covariance matrix</li>
+</ul>
+<h2 id="distributions---iii">Distributions - III</h2>
+<h3 id="multiple-variables">Multiple variables :</h3>
+<ul>
+<li>Define a “joint” distribution</li>
+<li>Denote by p(v,u)</li>
+<li>Is this the same as p(u)*p(v)? When is it not?</li>
+</ul>
+<h3 id="examples-in-terms-of-gaussians">Examples in terms of Gaussians :</h3>
+<ul>
+<li>Consider two variables, <span class="math inline">\(v \sim \mathcal{N}(\mu_v, \sigma_v)\)</span>, <span class="math inline">\(u \sim \mathcal{N}(\mu_u, \sigma_u)\)</span></li>
+<li>How does the joint distribution look?</li>
+<li>What if they were drawn from a 2D Gaussian?</li>
+<li>When does the second case reduce to the first?</li>
+</ul>
+<h2 id="bayes-theorem---i">Bayes theorem - I</h2>
+<h3 id="invert-the-event">Invert the event!</h3>
+<ul>
+<li>Reverse the probability of events</li>
+<li><span class="math inline">\(P(a | b) = \frac{P(b|a)P(a)}{P(b)}\)</span></li>
+</ul>
+<h3 id="terms-in-this-expression">Terms in this expression</h3>
+<ul>
+<li><span class="math inline">\(P(a|b)\)</span> - called the posterior</li>
+<li><span class="math inline">\(P(b|a)\)</span> - called the likelihood</li>
+<li><span class="math inline">\(P(a)\)</span> - called the prior</li>
+</ul>
+<h2 id="bayes-theorem---ii">Bayes theorem - II</h2>
+<h3 id="setting">Setting</h3>
+<ul>
+<li>B : Color of the ball</li>
+<li>A : Selection of box</li>
+<li><span class="math inline">\(B_1(1, 1, 1), B_2(2, 0, 0), B_3(0, 0, 1)\)</span></li>
+<li>All boxes are equally likely</li>
+</ul>
+<h3 id="inverting-the-event">Inverting the event</h3>
+<ul>
+<li>P(b | a) : Probability that color was b given box is a.</li>
+<li>P(a | b) : Probability that box was a given color is b.</li>
+<li>How do we use Bayes theorem here?</li>
 </ul>
 <h1 id="statistics">Statistics</h1>
 <h2 id="statistics-of-a-sample---i">Statistics of a sample - I</h2>
@@ -156,8 +200,9 @@
 <h2 id="spaces">Spaces</h2>
 <h3 id="constituents">Constituents :</h3>
 <ul>
-<li>Basis of the space</li>
-<li>Dot product or similarity measure</li>
+<li>Vectors (v,u,w)</li>
+<li>Dot products</li>
+<li>Norms</li>
 </ul>
 <h3 id="utility">Utility :</h3>
 <ul>
@@ -183,10 +228,11 @@
 <li><span class="math inline">\(Av = \lambda v\)</span> : <span class="math inline">\(\lambda\)</span> is an “eigenvalue”</li>
 <li>Denotes a direction in the space of the matrix</li>
 </ul>
-<h3 id="norm-of-vectors">Norm of vectors</h3>
+<h3 id="measures-of-vectors">Measures of vectors</h3>
 <ul>
 <li><span class="math inline">\(\|x\|_p\)</span> - denotes the p-norm</li>
 <li>Different norms have different interpretations</li>
+<li>Similarities (cos, distance)</li>
 </ul>
 <h1 id="functions-and-optimization">Functions and Optimization</h1>
 <h2 id="function-shapes">Function shapes</h2>
@@ -252,6 +298,91 @@
 <li><a href="http://www.cs.cmu.edu/~zkolter/course/15-884/linalg-review.pdf">Linear Algebra Overview</a></li>
 <li><a href="http://cs229.stanford.edu/section/cs229-prob.pdf">Probability Overview</a></li>
 <li><a href="http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/3274/pdf/imm3274.pdf">Matrix Algebra Overview</a></li>
+</ul>
+<h1 id="next-lecture-overview">Next Lecture overview</h1>
+<h2 id="our-first-classifier">Our first classifier</h2>
+<h3 id="naive-method-of-doing-classification">Naive method of doing classification?</h3>
+<ul>
+<li>Choose points which are nearby?</li>
+<li>Choose cluster which is nearby?</li>
+</ul>
+<h3 id="formal-names">Formal “names”</h3>
+<ul>
+<li>K-nearest Neighbors</li>
+<li>Distance from means</li>
+</ul>
+<h2 id="distance-from-means---i">Distance from means - I</h2>
+<h3 id="overview-of-model">Overview of model</h3>
+<ul>
+<li>Compute center of each class / label</li>
+<li>Assign the new point to closest mean</li>
+<li>What does “training” mean now?</li>
+<li>What does “testing” mean now?</li>
+</ul>
+<h3 id="drawbacks-and-strengths">Drawbacks and strengths?</h3>
+<ul>
+<li>Storage?</li>
+<li>Time taken?</li>
+<li>When can this be a bad method?</li>
+<li>When can this be good?</li>
+</ul>
+<h2 id="distance-from-means---ii">Distance from means - II</h2>
+<h3 id="coming-up-with-our-decision-function">Coming up with our “decision function”</h3>
+<ul>
+<li><span class="math inline">\(\mu_+\)</span> : positive mean</li>
+<li><span class="math inline">\(\mu_-\)</span> : negative mean</li>
+<li><span class="math inline">\(f(x^{new}) = d(x^{new}, \mu_-) - d(x^{new}, \mu_+)\)</span></li>
+</ul>
+<h3 id="geometry-of-the-decision-function">Geometry of the decision function</h3>
+<ul>
+<li>What does the boundary look like for this?</li>
+<li>What can it learn? What can’t it learn?</li>
+</ul>
+<h2 id="distance-from-means---iii">Distance from means - III</h2>
+<h3 id="as-similarity-to-training-data">As similarity to training data</h3>
+<ul>
+<li><span class="math inline">\(\|x^{new} - \mu_- \|^2 - \|x^{new} - \mu_+ \|^2\)</span></li>
+<li><span class="math inline">\(\langle \mu_+ - \mu_-, x^{new} \rangle + C\)</span></li>
+<li>Can be simplified into : <span class="math inline">\(f(x^{new}) = \sum \alpha_i \langle x_i, x^{new} \rangle + B\)</span></li>
+</ul>
+<p>What does this mean?</p>
+<h2 id="knn---i">KNN - I</h2>
+<h3 id="overview-of-model-1">Overview of model</h3>
+<ul>
+<li>Assign each point the class / value of its neighbor</li>
+<li>“K” - how many neighbors you account for</li>
+<li>What does “training” mean here?</li>
+<li>What would “testing” mean?</li>
+</ul>
+<h3 id="drawbacks-and-strenghts">Drawbacks and strenghts?</h3>
+<ul>
+<li>Storage?</li>
+<li>Time taken</li>
+<li>When can this be good or bad?</li>
+</ul>
+<h2 id="knn---ii">KNN - II</h2>
+<h3 id="geometry-of-the-decision-function-1">Geometry of the decision function</h3>
+<ul>
+<li>What sort of boundary does this generate?</li>
+<li>How powerful can this be?</li>
+<li>The “distance” can always be measured in other forms!</li>
+</ul>
+<h3 id="things-to-consider-for-this-model">Things to consider for this model</h3>
+<ul>
+<li>What happens if we have outliers?</li>
+<li>Where could this be an issue?</li>
+</ul>
+<h2 id="knn---iii">KNN - III</h2>
+<h3 id="what-is-the-optimal-k">What is the optimal K?</h3>
+<ul>
+<li>What happens if we increase K?</li>
+<li>Consider limit of K -&gt; N?</li>
+<li>What’s the best choice then?</li>
+</ul>
+<h3 id="extensions-to-knn">Extensions to KNN</h3>
+<ul>
+<li>Can this be extended in the regression / labelling setting?</li>
+<li>Transformation of coordinates - How does that affect KNN?</li>
 </ul>
 
 
