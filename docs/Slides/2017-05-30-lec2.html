@@ -22,7 +22,7 @@
         </div>
 
         <div id="content">
-            <h1>Machine Learning Basics - Gradients, Inversions, Similarities</h1>
+            <h1>Mathematical Basics</h1>
             <div class="info">
     Posted on May 30, 2017
     
@@ -31,10 +31,202 @@
 </div>
 
 <p><a href="lec2.pdf">Lecture slides in pdf form</a></p>
-<h3 id="content">Content</h3>
-<p>Contact information - govindg@cse.iitk.ac.in, please use [ACA ML] in subject</p>
-<h3 id="code">Code</h3>
-<h3 id="references">References</h3>
+<h2 id="announcements">Announcements</h2>
+<ul>
+<li>Pre-Course survey</li>
+<li>Programming assignments</li>
+<li>Project ideas and partners</li>
+<li>Installation of Jupyter / IPython notebook</li>
+</ul>
+<h1 id="overview">Overview</h1>
+<h2 id="notations">Notations</h2>
+<h3 id="dealing-with-data">Dealing with data :</h3>
+<ul>
+<li>X : Data matrix (NxD)</li>
+<li>Y : Label matrix (Nx1)</li>
+<li>w : Model parameters</li>
+<li>L(X,Y,w) : Loss of model w on X,Y</li>
+</ul>
+<h3 id="dealing-with-model">Dealing with model:</h3>
+<ul>
+<li><span class="math inline">\(\lambda\)</span> : Hyper parameters of a model</li>
+<li><span class="math inline">\(w^*\)</span> : Optimal model (may or may not be unique)</li>
+</ul>
+<h2 id="mathematics-in-machine-learning">Mathematics in Machine Learning</h2>
+<ul>
+<li>How do we describe and manipulate data?</li>
+<li>How do we “model” something?</li>
+<li>How do we analytically solve models?</li>
+<li>How do we mathematically “learn”?</li>
+</ul>
+<h1 id="probability">Probability</h1>
+<h2 id="basics">Basics</h2>
+<h3 id="definitions">Definitions</h3>
+<ul>
+<li>Event : Some occurence that is desirable</li>
+<li>Sample space : All possible events</li>
+<li><span class="math inline">\(P(a) = \frac{\|a\|}{\|a\| + \|a'\|}\)</span></li>
+</ul>
+<h3 id="terms">Terms</h3>
+<ul>
+<li><span class="math inline">\(\prod{p(a_i)}\)</span> - probability of multiple events</li>
+<li>Can also model likelihood of event</li>
+<li>Naturally leads to MLE (general technique, to be covered later)</li>
+</ul>
+<h2 id="random-variables">Random Variables</h2>
+<h3 id="what-are-they">What are they?</h3>
+<ul>
+<li>Exists as a mapping between a set of values and associated probabilities</li>
+<li>Represented as a probability distribution function</li>
+<li>Discrete, continuous, categorical etc</li>
+</ul>
+<h3 id="how-do-we-use-them">How do we use them?</h3>
+<ul>
+<li>Describe p(a) for a random variable</li>
+<li>Examples include normal, beta, poisson</li>
+<li>Integrate to 1</li>
+</ul>
+<h2 id="bayes-theorem">Bayes theorem</h2>
+<h3 id="invert-the-event">Invert the event!</h3>
+<ul>
+<li>Reverse the probability of events</li>
+<li><span class="math inline">\(P(a | b) = \frac{P(b|a)P(a)}{P(b)}\)</span></li>
+</ul>
+<h3 id="terms-in-this-expression">Terms in this expression</h3>
+<ul>
+<li><span class="math inline">\(P(a|b)\)</span> - called the posterior</li>
+<li><span class="math inline">\(P(b|a)\)</span> - called the likelihood</li>
+<li><span class="math inline">\(P(a)\)</span> - called the prior</li>
+</ul>
+<h2 id="distributions">Distributions</h2>
+<h3 id="continuous">Continuous</h3>
+<ul>
+<li>Gaussian : Model any real number distribution</li>
+<li>Beta : Model number between [0,1]</li>
+<li>Dirichlet : Model a vector that sums to 1</li>
+</ul>
+<h3 id="discrete">Discrete</h3>
+<ul>
+<li>Bernoulli : Model number of heads in a coin toss</li>
+<li>Poisson : Model counts of a variable</li>
+</ul>
+<p>These can be combined together (joint, marginal)</p>
+<h1 id="statistics">Statistics</h1>
+<h2 id="statiscs-of-a-sample">Statiscs of a sample</h2>
+<h3 id="mean-of-sample">Mean of sample</h3>
+<ul>
+<li><span class="math inline">\(\mathbb{E}[X]\)</span> - “average” of the distribution</li>
+<li>When can it be useless?</li>
+<li>When can it work as a representation?</li>
+</ul>
+<h3 id="variances-and-covariances">Variances and covariances</h3>
+<ul>
+<li><span class="math inline">\(\sigma^2\)</span> - “spread” of the distribution</li>
+<li>Can be used to “normalize” data</li>
+<li>Can be used to see where data is useless</li>
+</ul>
+<p>Generally, we do not come across other “moments” of the data in Machine Learning (skew, kurtosis etc).</p>
+<h1 id="linear-algebra">Linear Algebra</h1>
+<h2 id="spaces">Spaces</h2>
+<h3 id="constituents">Constituents :</h3>
+<ul>
+<li>Basis of the space</li>
+<li>Dot product or similarity measure</li>
+</ul>
+<h3 id="utility">Utility :</h3>
+<ul>
+<li>Our data “lives” in some space</li>
+<li>Our model describes “shapes” in that space</li>
+<li>Must deal with math of this space!</li>
+</ul>
+<h2 id="matrix-algebra">Matrix Algebra</h2>
+<h3 id="basics-1">Basics</h3>
+<ul>
+<li>Matrix (NxD) : Can denote a set of points</li>
+<li>Vector (1xD) : Denotes a single point</li>
+<li>Usually denotes our data</li>
+</ul>
+<h3 id="properties">Properties</h3>
+<ul>
+<li>Invertibility : <span class="math inline">\(AA^{-1} = I\)</span></li>
+<li>Definiteness : PD / PSD</li>
+</ul>
+<h2 id="other-terms">Other terms</h2>
+<h3 id="eigenvalues">Eigenvalues</h3>
+<ul>
+<li><span class="math inline">\(Av = \lambda v\)</span> : <span class="math inline">\(\lambda\)</span> is an “eigenvalue”</li>
+<li>Denotes a direction in the space of the matrix</li>
+</ul>
+<h3 id="norm-of-vectors">Norm of vectors</h3>
+<ul>
+<li><span class="math inline">\(\|x\|_p\)</span> - denotes the p-norm</li>
+<li>Different norms have different interpretations</li>
+</ul>
+<h1 id="functions-and-optimization">Functions and Optimization</h1>
+<h2 id="function-shapes">Function shapes</h2>
+<h3 id="convexity">Convexity</h3>
+<ul>
+<li>Convex (and concave) functions have single optima</li>
+<li>Easy to optimize over</li>
+<li>Follow the slope method</li>
+<li>Closed under summation (this is very very nice and important!)</li>
+</ul>
+<h3 id="smoothness-and-differentiability">Smoothness and differentiability</h3>
+<ul>
+<li>If a function is “smooth”, it will be easy to find the slope.</li>
+<li>If it has kinks, slightly harder to find actual gradients!</li>
+<li>If it is discontinuous, no real way to find gradients!</li>
+</ul>
+<h2 id="optimization-theory">Optimization theory</h2>
+<h3 id="basics-2">Basics :</h3>
+<ul>
+<li>Gradient descent : how to follow the slope</li>
+<li>Simple gradients for simple loss functions</li>
+<li>Combine gradients for sum of functions</li>
+</ul>
+<h3 id="examples-of-gradients">Examples of gradients :</h3>
+<ul>
+<li><span class="math inline">\((w-x)^2\)</span> : <span class="math inline">\(2(w-x)\)</span></li>
+<li><span class="math inline">\(e^{-w}\)</span> : <span class="math inline">\(-e^{-w}\)</span></li>
+</ul>
+<h2 id="example-of-gradient-descent">Example of gradient descent</h2>
+<ul>
+<li>For simple functions, easy to compute gradients</li>
+<li>General form of GD : <span class="math inline">\(x^{t+1} = x^t - \eta g^t\)</span></li>
+<li>Consider : <span class="math inline">\(f(x) = (x+c)^2\)</span></li>
+<li>Gradient : <span class="math inline">\(g(x) = 2(x+c)\)</span></li>
+</ul>
+<p>Let’s do gradient descent on this!</p>
+<h1 id="modelling">Modelling</h1>
+<h2 id="probabilistic-modelling">Probabilistic modelling</h2>
+<h3 id="coin-tossing-model">Coin tossing : model</h3>
+<ul>
+<li>What do we wish to model? : bias of coin (k)</li>
+<li>What data do we have? : H heads, T tails observed</li>
+</ul>
+<h3 id="mle-modelling">MLE modelling</h3>
+<ul>
+<li>p(H heads, T tails)?</li>
+<li>What can we do with this now?</li>
+<li>“Likelihood” can be our loss!</li>
+<li>What is the optimal choice here?</li>
+<li>Why could this fail?</li>
+</ul>
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="takeaways">Takeaways</h2>
+<ul>
+<li>How to write down probability of events</li>
+<li>What the mean and variance tell us about a random quantity</li>
+<li>Why matrices are used in Machine Learning, how we manipulate them</li>
+<li>What sort of loss functions should we consider? How do we actually use them?</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="http://web.cse.iitk.ac.in/users/piyush/tmp/maths_refresher.pdf">Review lecture in CS771, IIT Kanpur</a></li>
+<li><a href="http://www.cs.cmu.edu/~zkolter/course/15-884/linalg-review.pdf">Linear Algebra Overview</a></li>
+<li><a href="http://cs229.stanford.edu/section/cs229-prob.pdf">Probability Overview</a></li>
+<li><a href="http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/3274/pdf/imm3274.pdf">Matrix Algebra Overview</a></li>
+</ul>
 
 
         </div>
