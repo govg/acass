@@ -1,11 +1,26 @@
 ---
-title: Programming basics
+title: Getting set up
 author: Govind Gopakumar
 ---
 
 Note : I will update these with installation instructions as soon as possible.
 Please visit the links below for the same for now.
 
+
+## Windows users
+The most straightforward way to install all the required tools is to 
+install Anaconda. You can find it [here](https://www.continuum.io/downloads).
+
+It includes both Jupyter and Scikit-Learn, so you do not need to install 
+anything after this. If you already have a working Python installation,
+please look at the links below for installation instructions.
+
+## Linux users
+Most linux distributions come installed with Python by default. Please 
+look at packages for Jupyter on your distribution of choice, and install
+them. 
+
+- [Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-jupyter-notebook-to-run-ipython-on-ubuntu-16-04)
 
 ## Scikit-Learn and Jupyter
 
