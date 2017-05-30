@@ -76,7 +76,7 @@
 <h2 id="random-variables">Random Variables</h2>
 <h3 id="what-are-they">What are they?</h3>
 <ul>
-<li>Exists as a mapping between a set of values and associated probabilities</li>
+<li>Map between events and some value</li>
 <li>Represented as a probability distribution function</li>
 <li>Discrete, continuous, categorical etc</li>
 </ul>
@@ -98,7 +98,7 @@
 <li><span class="math inline">\(P(b|a)\)</span> - called the likelihood</li>
 <li><span class="math inline">\(P(a)\)</span> - called the prior</li>
 </ul>
-<h2 id="distributions">Distributions</h2>
+<h2 id="distributions---i">Distributions - I</h2>
 <h3 id="continuous">Continuous</h3>
 <ul>
 <li>Gaussian : Model any real number distribution</li>
@@ -111,8 +111,21 @@
 <li>Poisson : Model counts of a variable</li>
 </ul>
 <p>These can be combined together (joint, marginal)</p>
+<h2 id="distributions---ii">Distributions - II</h2>
+<h3 id="gaussian-distribution">Gaussian distribution :</h3>
+<ul>
+<li><span class="math inline">\(p(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{\frac{-1}{2\sigma^2} (x-\mu)^2}\)</span></li>
+<li><span class="math inline">\(\mu\)</span> : Mean of the distribution</li>
+<li><span class="math inline">\(\simga^2\)</span> : Variance of the distribution</li>
+</ul>
+<h3 id="multivariate-gaussian">Multivariate Gaussian :</h3>
+<ul>
+<li><span class="math inline">\(p(x) = \frac{1}{\sqrt{2\pi^k |\Sigma|}} e^{\frac{-1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)}\)</span></li>
+<li><span class="math inline">\(\mu\)</span> : Mean vector</li>
+<li><span class="math inline">\(\Sigma\)</span> : Covariance matrix</li>
+</ul>
 <h1 id="statistics">Statistics</h1>
-<h2 id="statiscs-of-a-sample">Statiscs of a sample</h2>
+<h2 id="statistics-of-a-sample---i">Statistics of a sample - I</h2>
 <h3 id="mean-of-sample">Mean of sample</h3>
 <ul>
 <li><span class="math inline">\(\mathbb{E}[X]\)</span> - “average” of the distribution</li>
@@ -126,6 +139,19 @@
 <li>Can be used to see where data is useless</li>
 </ul>
 <p>Generally, we do not come across other “moments” of the data in Machine Learning (skew, kurtosis etc).</p>
+<h2 id="statistics-of-a-sample---ii">Statistics of a sample - II</h2>
+<h3 id="of-standard-distributions">Of standard distributions</h3>
+<ul>
+<li>Gaussian : <span class="math inline">\(\Sigma\)</span></li>
+<li>Bernoulli : <span class="math inline">\(p(1-p)\)</span></li>
+</ul>
+<h3 id="of-a-sample">Of a sample</h3>
+<ul>
+<li>Defined as “empirical” quantities</li>
+<li>Mean : <span class="math inline">\(\mu\)</span></li>
+<li>Variance / Covariance</li>
+<li>Used in “moment matching” techniques</li>
+</ul>
 <h1 id="linear-algebra">Linear Algebra</h1>
 <h2 id="spaces">Spaces</h2>
 <h3 id="constituents">Constituents :</h3>
