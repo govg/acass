@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Govind Gopakumar</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/syntax.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">/home/course</a>
+            </div>
+            <div id="navigation">
+                <a href="../codes.html">Codes</a>
+                <a href="../resources.html">Resources</a>
+				<a href="../slides.html">Slides</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Day 3 - Supervised learning - Distance based methods</h1>
+            <div class="info">
+    Posted on May 31, 2017
+    
+        by Govind Gopakumar
+    
+</div>
+
+<h2 id="announcements">Announcements</h2>
+<ul>
+<li>Project groups : final</li>
+<li>Code to be uploaded by tonight</li>
+<li>Webpage - govg.github.io/acass</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<h3 id="mathematics">Mathematics</h3>
+<ul>
+<li>Probability</li>
+<li>Statistics (probably not very well)</li>
+<li>Linear Algebra</li>
+<li>Optimization Theory</li>
+</ul>
+<h3 id="mle-modelling">MLE modelling</h3>
+<p>How to assume a model, work out the loss/reward function, optimize it, and arrive at a final model.</p>
+<h1 id="proximity-based-methods">Proximity Based Methods</h1>
+<h2 id="what-is-the-end-goal">What is the end goal?</h2>
+<h3 id="supervised-learning">Supervised learning</h3>
+<ul>
+<li>Predict a class / value for new points</li>
+<li>“Train” using lots of old points, their labels</li>
+<li>Learn something meaningful</li>
+<li>Hopefully generalizes!</li>
+</ul>
+<h2 id="whats-the-easiest-way-to-assign-a-labelvalue">What’s the easiest way to assign a label/value?</h2>
+<h3 id="naive-method-of-doing-classification">Naive method of doing classification?</h3>
+<ul>
+<li>Choose points which are nearby?</li>
+<li>Choose cluster which is nearby?</li>
+</ul>
+<h3 id="formal-names">Formal “names”</h3>
+<ul>
+<li>K-nearest Neighbors</li>
+<li>Distance from means</li>
+</ul>
+<h1 id="our-first-classifier">Our first classifier</h1>
+<h2 id="distance-based-classifier">Distance based classifier</h2>
+<h3 id="given-input">Given Input</h3>
+<ul>
+<li>N examples : <strong>training data</strong></li>
+<li>N labels : <strong>training labels</strong></li>
+<li><span class="math inline">\(N_+, N_-\)</span> respective number of points</li>
+</ul>
+<h3 id="what-is-the-objective-now">What is the objective now?</h3>
+<ul>
+<li>Some “model” that predicts for new data</li>
+<li>Accounts for more than 1 class?</li>
+</ul>
+<h2 id="distance-from-means---i">Distance from means - I</h2>
+<h3 id="overview-of-model">Overview of model</h3>
+<ul>
+<li>Compute center of each class / label</li>
+<li>Assign the new point to closest mean</li>
+<li>What does “training” mean now?</li>
+<li>What does “testing” mean now?</li>
+</ul>
+<h3 id="coming-up-with-our-decision-function">Coming up with our “decision function”</h3>
+<ul>
+<li><span class="math inline">\(\mu_+\)</span> : positive mean</li>
+<li><span class="math inline">\(\mu_-\)</span> : negative mean</li>
+<li><span class="math inline">\(f(x^{new}) = d(x^{new}, \mu_-) - d(x^{new}, \mu_+)\)</span></li>
+</ul>
+<h2 id="distance-from-means---ii">Distance from means - II</h2>
+<h3 id="as-similarity-to-training-data">As similarity to training data</h3>
+<ul>
+<li><span class="math inline">\(\|x^{new} - \mu_- \|^2 - \|x^{new} - \mu_+ \|^2\)</span></li>
+<li><span class="math inline">\(\langle \mu_+ - \mu_-, x^{new} \rangle + C\)</span></li>
+<li>Can be simplified into : <span class="math inline">\(f(x^{new}) = \sum \alpha_i \langle x_i, x^{new} \rangle + B\)</span></li>
+</ul>
+<p>What does this mean?</p>
+<h2 id="distance-from-means---iii">Distance from means - III</h2>
+<h3 id="geometry-of-the-decision-function">Geometry of the decision function</h3>
+<ul>
+<li>What does the boundary look like for this?</li>
+<li>What can it learn? What can’t it learn?</li>
+</ul>
+<h3 id="drawbacks-and-strengths">Drawbacks and strengths?</h3>
+<ul>
+<li>Storage?</li>
+<li>Time taken?</li>
+<li>When can this be a bad method?</li>
+<li>When can this be good?</li>
+</ul>
+<h2 id="distance-from-means---iv">Distance from means - IV</h2>
+<h3 id="extending-this">Extending this</h3>
+<ul>
+<li>Dealing with different kinds of features (weight, height)</li>
+<li>Dealing with different kinds of distances</li>
+<li>Adding a probability distribution to it!</li>
+</ul>
+<h1 id="k-nearest-neighbors">K nearest neighbors</h1>
+<h2 id="knn---i">KNN - I</h2>
+<h3 id="overview-of-model-1">Overview of model</h3>
+<ul>
+<li>Assign each point the class / value of its neighbor</li>
+<li>“K” - how many neighbors you account for</li>
+<li>What does “training” mean here?</li>
+<li>What would “testing” mean?</li>
+</ul>
+<h3 id="geometry-of-the-decision-function-1">Geometry of the decision function</h3>
+<ul>
+<li>What sort of boundary does this generate?</li>
+<li>How powerful can this be?</li>
+<li>The “distance” can always be measured in other forms!</li>
+</ul>
+<h2 id="knn---ii">KNN - II</h2>
+<h3 id="drawbacks-and-strengths-1">Drawbacks and strengths?</h3>
+<ul>
+<li>Storage?</li>
+<li>Time taken</li>
+<li>When can this be good or bad?</li>
+</ul>
+<h3 id="things-to-consider-for-this-model">Things to consider for this model</h3>
+<ul>
+<li>What happens if we have outliers?</li>
+<li>Where could this be an issue?</li>
+</ul>
+<h2 id="knn---iii">KNN - III</h2>
+<h3 id="what-is-the-optimal-k">What is the optimal K?</h3>
+<ul>
+<li>What happens if we increase K?</li>
+<li>Consider limit of K -&gt; N?</li>
+<li>What’s the best choice then?</li>
+</ul>
+<h3 id="extensions-to-knn">Extensions to KNN</h3>
+<ul>
+<li>Can this be extended in the regression / labelling setting?</li>
+<li>Transformation of coordinates - How does that affect KNN?</li>
+</ul>
+<h1 id="partition-based-methods">Partition based methods</h1>
+<h2 id="why-do-we-require-better-methods">Why do we require better methods?</h2>
+<h3 id="geometry-of-the-problem">Geometry of the problem</h3>
+<ul>
+<li>KNN, DfM suffers from scaling</li>
+<li>Our distance function must be chosen correctly</li>
+<li>Outlier can change a lot about the problem</li>
+</ul>
+<h3 id="model-implementation">Model implementation</h3>
+<ul>
+<li>Require a very large amount of space (KNN)</li>
+<li>Is not space efficient</li>
+<li>Is not very powerful (DfM)</li>
+</ul>
+<p>Solution? (Partitioning?)</p>
+<h2 id="asking-questions-from-data">Asking questions from data</h2>
+<h3 id="lets-classify-oranges">Let’s classify oranges!</h3>
+<ul>
+<li>You are given 1000 oranges</li>
+<li>What you know : color, weight, radius, number of spots</li>
+<li>What you want to know : is the orange good or bad?</li>
+</ul>
+<h3 id="natural-human-thought">Natural human thought?</h3>
+<ul>
+<li>Ask questions of the data</li>
+<li>Does this approach scale?</li>
+<li>How do we make this more abstract?</li>
+</ul>
+<h2 id="decision-trees---i">Decision Trees - I</h2>
+<h3 id="model-overview">Model overview</h3>
+<ul>
+<li>Defined by a set of rules, in a tree form</li>
+<li>Each node checks some feature</li>
+<li>We don’t need it to be binary</li>
+<li>At the leaf, we can do classification</li>
+</ul>
+<h3 id="geometry-of-the-problem-1">Geometry of the problem</h3>
+<ul>
+<li>What is the decision boundary this forms?</li>
+<li>How does this look in higher dimensions?</li>
+</ul>
+<h2 id="decision-trees---ii">Decision Trees - II</h2>
+<h3 id="how-do-we-ask-the-right-questions">How do we ask the right questions?</h3>
+<ul>
+<li>Which features are informative?</li>
+<li>Which features are useless?</li>
+<li>Variance, Entropy?</li>
+</ul>
+<h3 id="how-useful-is-a-feature-for-us">How useful is a feature for us?</h3>
+<ul>
+<li>Do we need to know how it varies?</li>
+<li>Do we need to see how it relates to class?</li>
+</ul>
+<h2 id="decision-trees---iii">Decision Trees - III</h2>
+<h3 id="entropy-to-measure-utility">Entropy to measure utility</h3>
+<ul>
+<li>Entropy : <span class="math inline">\(-\sum p_i \log{p_i}\)</span></li>
+<li>Information Gain : <span class="math inline">\(H - H_f\)</span></li>
+</ul>
+<h3 id="how-does-this-help-us">How does this help us?</h3>
+<ul>
+<li>Choose feature with highest “Information Gain”</li>
+<li>How do we compute this?</li>
+</ul>
+<h2 id="decision-trees---iv">Decision Trees - IV</h2>
+<h3 id="playing-tennis">Playing Tennis</h3>
+<div class="figure">
+<img src="../images/lec3_tennis.jpg" />
+
+</div>
+<h2 id="decision-trees---v">Decision Trees - V</h2>
+<h3 id="computing-ig-for-features">Computing IG for features</h3>
+<ul>
+<li>Let us compute IG for Wind</li>
+<li>If we choose Wind, we get two splits (Weak, Strong)</li>
+<li>First split will have {2-, 6+}</li>
+<li>Second split will have {3+, 3-}</li>
+</ul>
+<h3 id="values">Values</h3>
+<ul>
+<li>Entropy for first : 0.81125</li>
+<li>Entropy for second : 1</li>
+<li>Total weighted entropy : 0.892</li>
+<li>IG : 0.94 - 0.892 = 0.048</li>
+</ul>
+<h2 id="decision-trees---vi">Decision Trees - VI</h2>
+<h3 id="ig-for-all-features">IG for all features</h3>
+<ul>
+<li>Outlook : 0.246</li>
+<li>Humidity : 0.151</li>
+<li>Wind : 0.048</li>
+<li>Temperature : 0.029</li>
+</ul>
+<h3 id="choosing-features">Choosing features?</h3>
+<ul>
+<li>Best : Outlook</li>
+<li>Worst : Temperature</li>
+</ul>
+<h2 id="decision-trees---vii">Decision Trees - VII</h2>
+<h3 id="for-real-valued-features">For real valued features?</h3>
+<ul>
+<li>Choose a value which gets best IG</li>
+<li>How efficient is this?</li>
+<li>How much time would this take?</li>
+</ul>
+<h3 id="extending-this-1">Extending this</h3>
+<ul>
+<li>Random forests!</li>
+<li>Use the power of randomness</li>
+</ul>
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="concluding-remarks">Concluding Remarks</h2>
+<h3 id="takeaways">Takeaways</h3>
+<ul>
+<li>Three different classifiers, each exploiting geometry</li>
+<li>Issues with such methods</li>
+<li>Importance of space, time when doing ML</li>
+<li>How human intuition leads to natural models</li>
+</ul>
+<h3 id="announcements-1">Announcements</h3>
+<ul>
+<li>Programming “Assignment” will be up hopefully tonight</li>
+<li>Sample code for all the classifiers taught so far</li>
+<li>Quiz 1 will be uploaded tomorrow night</li>
+</ul>
+
+
+        </div>
+
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
