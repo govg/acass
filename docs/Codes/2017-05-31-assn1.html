@@ -30,7 +30,60 @@
     
 </div>
 
-<p>Please find the associated IPython file <a href>here</a></p>
+<p>Please find the associated IPython notebook <a href>here</a>.</p>
+<p>In this assignment, we’ll try our hand out at the few classifiers we know. It is meant to serve as an introduction to both the scikit-learn interface, as well as how to deal with data in Python.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Import the required libraries</span>
+<span class="im">import</span> numpy <span class="im">as</span> np
+<span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt
+
+<span class="co"># Import the KNN Classifier</span>
+<span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier
+
+<span class="co"># Import the Decision Tree Classifier</span>
+<span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier
+
+<span class="co"># We also need some data. For now, we shall use scikit-learn's inbuilt data</span>
+<span class="co"># models. We will learn how to use our own data later on.</span>
+<span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</code></pre></div>
+<p>The above lines do the following tasks : - Import basic libraries we need (array handling, plotting) - Imported both the classifiers we studied (KNN, Decision Tree) - Imported a data loading tool that loads the <strong>Iris</strong> dataset</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">iris <span class="op">=</span> load_iris()
+X <span class="op">=</span> iris.data
+Y <span class="op">=</span> iris.target</code></pre></div>
+<pre><code>(150,)</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Let us find out what the dimensions that we are dealing with are : </span>
+
+<span class="bu">print</span>(X.shape)
+<span class="bu">print</span>(Y.shape)</code></pre></div>
+<pre><code>(150, 4)
+(150,)</code></pre>
+<p>We have our data in hand. Let us proceed with classification!</p>
+<p>Remember that Decision Tree does not require any particular parameters from our end, but we do need to specify the “K” in K nearest neighbors!</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Create the Classifiers</span>
+knnclf <span class="op">=</span> KNeighborsClassifier(n_neighbors <span class="op">=</span> <span class="dv">5</span>)
+dectreeclf <span class="op">=</span> DecisionTreeClassifier()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">knnclf.fit(X, Y)
+dectreeclf.fit(X,Y)</code></pre></div>
+<pre><code>DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+            max_features=None, max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=2, min_weight_fraction_leaf=0.0,
+            presort=False, random_state=None, splitter='best')</code></pre>
+<p>The above two calls illustrate the training procedure. Note that we don’t have to do anything at all! Just make the data in the appropriate matrix format, and call the fit() function for each of our classifiers. We can now check how well our model has learnt from our data.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># clf.predict(X) returns the predictions of the classifier on the matrix X</span>
+<span class="co"># Here, we are comparing how clf.predict does to the original labels Y, and printing the average</span>
+<span class="co"># This will give us the accuracy of the classifier that we have created</span>
+<span class="bu">print</span>((knnclf.predict(X) <span class="op">==</span> Y).mean())
+<span class="bu">print</span>((dectreeclf.predict(X) <span class="op">==</span> Y).mean())</code></pre></div>
+<pre><code>0.966666666667
+1.0</code></pre>
+<p>As we can see above, the decision tree does better than the K nearest neighbors classifier. This can be due to various reasons. I would encourage you to play with different parameters of the scikit learn library functions, and see how high you can get this accuracy to go.</p>
+<p>Links :</p>
+<ul>
+<li><a href="http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html">KNN Classifier</a></li>
+<li><a href="http://scikit-learn.org/stable/modules/tree.html">Decision Tree Classifier</a></li>
+<li><a href="http://scikit-learn.org/stable/auto_examples/datasets/plot_iris_dataset.html#sphx-glr-auto-examples-datasets-plot-iris-dataset-py">Iris dataset</a></li>
+<li><a href="http://scikit-learn.org/stable/_downloads/plot_iris_dataset.ipynb">IPython Visualization notebook of Iris</a></li>
+</ul>
 
 
         </div>
