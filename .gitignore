@@ -6,4 +6,5 @@ websrc/templates/_cache
 websrc/css/
 websrc/images/
 temp/
+code/.ipy*
 

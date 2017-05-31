@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Govind Gopakumar</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/syntax.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">/home/course</a>
+            </div>
+            <div id="navigation">
+                <a href="../codes.html">Codes</a>
+                <a href="../resources.html">Resources</a>
+				<a href="../slides.html">Slides</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Playing With Distributions</h1>
+            <div class="info">
+    Posted on May 31, 2017
+    
+        by Govind Gopakumar
+    
+</div>
+
+<p>Please find the associated IPython file <a href>here</a></p>
+<h3 id="trying-out-different-distributions">Trying out different distributions</h3>
+<p>In this notebook, we shall try and visualize what different distributions look like in 1D and 2D. Hopefully, it will give some intuition into what random variables are, and what correlations look like.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Import the required modules. </span>
+<span class="im">import</span> numpy <span class="im">as</span> np
+<span class="im">import</span> sklearn <span class="im">as</span> sk
+<span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Define the mean and std.dev of the Gaussian Distribution</span>
+mu <span class="op">=</span> <span class="dv">0</span>
+sigma <span class="op">=</span> <span class="fl">0.5</span>
+
+<span class="co"># Draw 1000 samples from a normal distribution</span>
+samples <span class="op">=</span> np.random.normal(mu, sigma, <span class="dv">1000</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Plot all the points we have drawn, it should be &quot;thick&quot; in the middle, with few outliers</span>
+plt.plot(samples)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code3_1.png" alt="Generated Image" />
+<p class="caption">Generated Image</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Computes a histogram of all the values we have obtained so far</span>
+hist, bin_edges <span class="op">=</span> np.histogram(samples, bins<span class="op">=</span><span class="dv">30</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Plot the histogram we have obtained. It should be like a bell curve</span>
+plt.plot(hist)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code3_2.png" alt="Generated Image" />
+<p class="caption">Generated Image</p>
+</div>
+<p>We have seen how the normal distribution resembles a sort of bell curve. With increasing samples, we will be able to see a closer fit to the “bell” shape. We’ll now see if we can replicate our classroom examples of drawing from a 2D Gaussian distribution</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Define the mean and covariance matrix</span>
+<span class="co"># We can choose a diagonal matrix, or any symmetric matrix of our choice.</span>
+<span class="co"># It must be symmetric (because covariance matrices are always symmetric!)</span>
+
+mean <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]
+covariance <span class="op">=</span> [[<span class="dv">1</span>,<span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">3</span>]]
+
+x, y <span class="op">=</span> np.random.multivariate_normal(mean, covariance, <span class="dv">1000</span>).T</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># We'll now plot this in a 2D plot. Hopefully we will get circular shapes</span>
+plt.plot(x, y, <span class="st">'x'</span>)
+plt.axis(<span class="st">'equal'</span>)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code3_3.png" alt="Generated Image" />
+<p class="caption">Generated Image</p>
+</div>
+<p>Feel free to play around with the mean and covariance parameters, it should help you build some idea of how the Gaussian distributions behave.</p>
+
+
+        </div>
+
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
