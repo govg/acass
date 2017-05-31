@@ -63,3 +63,8 @@ The above should generate a plot similar to :
 
 ![](../images/setup.png)
 
+
+To try out Jupyter notebooks without installing anything on your machine,
+try [this](https://try.jupyter.org/). You should be able to do most of the
+trivial assignments we do, but for ones with datasets, you will have to 
+install it on your own machine. 
