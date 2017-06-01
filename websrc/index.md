@@ -13,7 +13,7 @@ Theory and Practice. Please follow the links you can see around you to navigate.
 2. Machine Learning Basics - Gradients, Inversions, Similarities
 3. Supervised learning - KNN, Decision Trees
 4. Supervised learning - Linear Regression (and Matrix Factorization)
-5. Supervised learning - logistic regression
+5. Supervised learning - Logistic regression
 6. Unsupervised learning - KMeans, GMMs, PCA
 7. Advanced methods - Kernels, SVMs, Perceptrons, Neural Networks
 8. Feature engineering - how to make sense of images (and maybe audio)
@@ -22,7 +22,8 @@ Theory and Practice. Please follow the links you can see around you to navigate.
 
 ### Announcements and links
 
-
+- Programming Assignment 1 is up. Please find it in the "Code" tabe to the top right. It is
+ meant only as an introduction to scikit-learn and the IPython notebook environment. 
 - [Pre-course survey](http://www.goo.gl/2hZlzo) - Please fill up this form, it lets me send
 you course emails directly, and also adjust the course contents according to 
 student demographic.

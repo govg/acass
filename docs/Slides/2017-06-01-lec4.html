@@ -12,7 +12,7 @@
     <body>
         <div id="header">
             <div id="logo">
-                <a href="../">/home/course</a>
+                <a href="../">/home</a>
             </div>
             <div id="navigation">
                 <a href="../codes.html">Codes</a>
@@ -141,29 +141,6 @@
 <li>What does it look like in higher dimensions?</li>
 </ul>
 <h2 id="linear-regression-via-optimization---i">Linear Regression : via Optimization - I</h2>
-<h3 id="modelling-assumption">Modelling assumption</h3>
-<ul>
-<li><span class="math inline">\(y = \langle w, x \rangle\)</span></li>
-<li>Why does this make sense?</li>
-</ul>
-<h3 id="can-we-set-up-a-loss-function-now">Can we set up a loss function now?</h3>
-<ul>
-<li>What is a natural loss function?</li>
-<li>How do we optimize this function?</li>
-</ul>
-<h2 id="linear-regression-via-optimization---ii">Linear Regression : via Optimization - II</h2>
-<h3 id="final-form-of-the-loss-function">Final form of the loss function:</h3>
-<ul>
-<li><span class="math inline">\(l(w) = \sum (y-\langle w, x \rangle)^2\)</span></li>
-<li>Called the “squared loss”</li>
-<li>Obviously, other losses can be used</li>
-</ul>
-<h3 id="how-do-we-optimize-this">How do we optimize this?</h3>
-<ul>
-<li>Gradient descent!</li>
-<li>Can we get away with a direct step?</li>
-</ul>
-<h2 id="linear-regression-via-optimization---iii">Linear Regression : via Optimization - III</h2>
 <h3 id="very-toy-example">Very toy example</h3>
 <ul>
 <li>Simple 1 D regression</li>
@@ -176,7 +153,7 @@
 <li>Formal objective : minimize <span class="math inline">\(l(w)\)</span></li>
 <li>Is there an intuitive guess?</li>
 </ul>
-<h2 id="linear-regression-via-optimization---iv">Linear Regression : via Optimization - IV</h2>
+<h2 id="linear-regression-via-optimization---ii">Linear Regression : via Optimization - II</h2>
 <h3 id="it-is-possible-to-solve-this-analytically">It is possible to solve this analytically!</h3>
 <ul>
 <li>Let’s do it without intercept</li>
@@ -188,10 +165,33 @@
 <li>Again possible!</li>
 <li>Find in terms of partial derivatives!</li>
 </ul>
+<h2 id="linear-regression-via-optimization---iii">Linear Regression : via Optimization - III</h2>
+<h3 id="modelling-assumption">Modelling assumption</h3>
+<ul>
+<li><span class="math inline">\(y = \langle w, x \rangle\)</span></li>
+<li>Why does this make sense?</li>
+</ul>
+<h3 id="can-we-set-up-a-loss-function-now">Can we set up a loss function now?</h3>
+<ul>
+<li>What is a natural loss function?</li>
+<li>How do we optimize this function?</li>
+</ul>
+<h2 id="linear-regression-via-optimization---iv">Linear Regression : via Optimization - IV</h2>
+<h3 id="final-form-of-the-loss-function">Final form of the loss function:</h3>
+<ul>
+<li><span class="math inline">\(l(w) = \sum (y-\langle w, x \rangle)^2\)</span></li>
+<li>Called the “squared loss”</li>
+<li>Obviously, other losses can be used</li>
+</ul>
+<h3 id="how-do-we-optimize-this">How do we optimize this?</h3>
+<ul>
+<li>Gradient descent!</li>
+<li>Can we get away with a direct step?</li>
+</ul>
 <h2 id="linear-regression-via-optimization---v">Linear Regression : via Optimization - V</h2>
 <h3 id="multidimensional-setting">Multidimensional setting</h3>
 <ul>
-<li>The same thing, except <span class="math inline">\((y-\langle w, x \rangle)^2\)</span></li>
+<li>The same thing : <span class="math inline">\((y-\langle w, x \rangle)^2\)</span></li>
 <li>Can be solved analytically!</li>
 </ul>
 <h3 id="how-do-we-solve-this">How do we solve this?</h3>
