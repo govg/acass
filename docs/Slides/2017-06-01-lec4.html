@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Govind Gopakumar</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/syntax.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">/home/course</a>
+            </div>
+            <div id="navigation">
+                <a href="../codes.html">Codes</a>
+                <a href="../resources.html">Resources</a>
+				<a href="../slides.html">Slides</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Day 4 - Supervised Learning - Linear Regression</h1>
+            <div class="info">
+    Posted on June  1, 2017
+    
+        by Govind Gopakumar
+    
+</div>
+
+<p><a href="lec4.pdf">Lecture slides in pdf form</a></p>
+<h1 id="prelude">Prelude</h1>
+<h2 id="announcements">Announcements</h2>
+<ul>
+<li>Programming assignment has been put up</li>
+<li>Feedback form is still active</li>
+<li>Additional Programming material will be up by weekend</li>
+<li>Webpage - govg.github.io/acass</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<h3 id="simple-models-for-classification">Simple models for Classification</h3>
+<ul>
+<li>Distance from means : Learns a line</li>
+<li>KNN : Learns any shape, but at high cost</li>
+<li>Decision Tree : Learns rectangles, but can be costly</li>
+</ul>
+<h3 id="visualizing-the-boundaries">Visualizing the boundaries</h3>
+<ul>
+<li>Captures how powerful our model is</li>
+<li>Represents tradeoff between space/time and accuracy</li>
+</ul>
+<h2 id="ensemble-methods-random-forests---i">Ensemble methods : Random Forests - I</h2>
+<h3 id="why-did-we-need-them">Why did we need them?</h3>
+<ul>
+<li>Decision trees could be hard to construct</li>
+<li>Structure that decision trees compute was powerful</li>
+</ul>
+<h3 id="brief-idea">Brief idea</h3>
+<ul>
+<li>“Ensemble” models : Have multiple models</li>
+<li>“Subsampling” data : Don’t give all the models the same data</li>
+<li>“Random” features : Don’t bother with exact IG calculations!</li>
+</ul>
+<h2 id="ensemble-methods-random-forests---ii">Ensemble methods : Random Forests - II</h2>
+<h3 id="model-overview">Model overview</h3>
+<ul>
+<li>Set of “trees” - hence the forest</li>
+<li>Set of questions / rules in a hierarchy</li>
+<li>Questions are weaker than earlier</li>
+<li>Each “tree” is given a subset of data</li>
+</ul>
+<h3 id="benefits">Benefits?</h3>
+<ul>
+<li>Extremely fast in testing</li>
+<li>Used in real world : Kinect</li>
+<li>Often the go-to classifier / regressor</li>
+</ul>
+<h2 id="how-to-come-up-with-a-loss-function">How to come up with a loss function</h2>
+<h3 id="toy-setting-find-closest-point">Toy setting : Find closest point</h3>
+<ul>
+<li>We are given a set of <span class="math inline">\(N\)</span> data points</li>
+<li>Our goal : Find the point that is closest to them all.</li>
+</ul>
+<h3 id="casting-as-an-optimization">Casting as an optimization</h3>
+<ul>
+<li>What is the appropriate loss function?</li>
+<li>How do we solve this problem?</li>
+<li>Gradient Descent??</li>
+</ul>
+<h2 id="what-is-the-end-goal">What is the end goal?</h2>
+<h3 id="supervised-learning">Supervised learning</h3>
+<ul>
+<li>Predict a class / value for new points</li>
+<li>“Train” using lots of old points, their labels</li>
+<li>Learn something meaningful</li>
+<li>Hopefully generalizes!</li>
+</ul>
+<h2 id="whats-an-easy-method-to-model-a-trend">What’s an easy method to model a trend?</h2>
+<h3 id="naive-method-of-doing-regression">Naive method of doing regression?</h3>
+<ul>
+<li>Do KNN again, but choose to do regression!</li>
+<li>Decision Trees for regression?</li>
+</ul>
+<h3 id="what-other-methods-exist">What other methods exist?</h3>
+<ul>
+<li>Simplest method - draw a line!</li>
+</ul>
+<h1 id="our-first-regressor">Our first regressor</h1>
+<h2 id="regression-as-line-fitting">Regression as line fitting</h2>
+<h3 id="given-input">Given Input</h3>
+<ul>
+<li>N examples : <strong>training data</strong></li>
+<li>N values : <strong>training labels</strong></li>
+</ul>
+<h3 id="what-is-the-objective-now">What is the objective now?</h3>
+<ul>
+<li>Given a new example : Predict what the value will be?</li>
+</ul>
+<h2 id="how-do-we-adapt-our-existing-model">How do we adapt our existing model?</h2>
+<h3 id="knn-for-regression">KNN for regression!</h3>
+<ul>
+<li>Choose the values of nearby methods and average them.</li>
+<li>Improvement (that works for classification, but not as effective) - use distance to weigh them</li>
+</ul>
+<h3 id="decision-tree-for-regression">Decision Tree for regression?</h3>
+<ul>
+<li>How do we choose the split?</li>
+<li>How do we choose the final value to predict?</li>
+</ul>
+<h2 id="regression-as-line-fitting-1">Regression as line fitting</h2>
+<h3 id="model-overview-1">Model overview</h3>
+<ul>
+<li>Draw a line that “fits” through all the given points</li>
+<li>Why a line? Why not arbitrary curves?</li>
+</ul>
+<h3 id="geometry-of-the-problem">Geometry of the problem</h3>
+<ul>
+<li>There’s no real decision “boundary”</li>
+<li>What does it look like in higher dimensions?</li>
+</ul>
+<h2 id="linear-regression-via-optimization---i">Linear Regression : via Optimization - I</h2>
+<h3 id="modelling-assumption">Modelling assumption</h3>
+<ul>
+<li><span class="math inline">\(y = \langle w, x \rangle\)</span></li>
+<li>Why does this make sense?</li>
+</ul>
+<h3 id="can-we-set-up-a-loss-function-now">Can we set up a loss function now?</h3>
+<ul>
+<li>What is a natural loss function?</li>
+<li>How do we optimize this function?</li>
+</ul>
+<h2 id="linear-regression-via-optimization---ii">Linear Regression : via Optimization - II</h2>
+<h3 id="final-form-of-the-loss-function">Final form of the loss function:</h3>
+<ul>
+<li><span class="math inline">\(l(w) = \sum (y-\langle w, x \rangle)^2\)</span></li>
+<li>Called the “squared loss”</li>
+<li>Obviously, other losses can be used</li>
+</ul>
+<h3 id="how-do-we-optimize-this">How do we optimize this?</h3>
+<ul>
+<li>Gradient descent!</li>
+<li>Can we get away with a direct step?</li>
+</ul>
+<h2 id="linear-regression-via-optimization---iii">Linear Regression : via Optimization - III</h2>
+<h3 id="very-toy-example">Very toy example</h3>
+<ul>
+<li>Simple 1 D regression</li>
+<li>Data : X (Nx1), Y (Nx1)</li>
+<li>Model : <span class="math inline">\(y = mx\)</span></li>
+<li>Geometry of this?</li>
+</ul>
+<h3 id="how-do-we-solve-the-optimization-problem">How do we solve the optimization problem?</h3>
+<ul>
+<li>Formal objective : minimize <span class="math inline">\(l(w)\)</span></li>
+<li>Is there an intuitive guess?</li>
+</ul>
+<h2 id="linear-regression-via-optimization---iv">Linear Regression : via Optimization - IV</h2>
+<h3 id="it-is-possible-to-solve-this-analytically">It is possible to solve this analytically!</h3>
+<ul>
+<li>Let’s do it without intercept</li>
+<li>Direct technique : Take gradient, set to zero?</li>
+<li>Gradient descent : Why?</li>
+</ul>
+<h3 id="with-the-intercept-term">With the intercept term?</h3>
+<ul>
+<li>Again possible!</li>
+<li>Find in terms of partial derivatives!</li>
+</ul>
+<h2 id="linear-regression-via-optimization---v">Linear Regression : via Optimization - V</h2>
+<h3 id="multidimensional-setting">Multidimensional setting</h3>
+<ul>
+<li>The same thing, except <span class="math inline">\((y-\langle w, x \rangle)^2\)</span></li>
+<li>Can be solved analytically!</li>
+</ul>
+<h3 id="how-do-we-solve-this">How do we solve this?</h3>
+<ul>
+<li><span class="math inline">\(\frac{\partial}{\partial w} \sum (y_i - w^T x_i)^2 = 0\)</span></li>
+<li><span class="math inline">\(2(y_i - w^T x_i) \frac{\partial}{\partial w} (y_i - w^T x_i) = 0\)</span></li>
+<li>Final form?</li>
+<li><span class="math inline">\(w = (X^TX)^{-1}X^T Y\)</span></li>
+</ul>
+<h2 id="linear-regression-via-optimization---vi">Linear Regression : via Optimization - VI</h2>
+<h3 id="mathematical-issues">Mathematical issues?</h3>
+<ul>
+<li>Why should the inverse exist?</li>
+<li>What can we say about the values of w?</li>
+</ul>
+<h3 id="implementation-issues">Implementation issues?</h3>
+<ul>
+<li>How do we invert this matrix?</li>
+<li>Numerical issues?</li>
+</ul>
+<h2 id="linear-regression-via-optimization---vii">Linear Regression : via Optimization - VII</h2>
+<h3 id="regularizer-why">Regularizer : Why?</h3>
+<ul>
+<li>Some way to control our objective function.</li>
+<li>What can the values of <span class="math inline">\(w\)</span> be in our answer?</li>
+<li>What does it mean to have really large values?</li>
+</ul>
+<h3 id="how-do-we-impose-it">How do we impose it?</h3>
+<ul>
+<li>Requirements : restrict <span class="math inline">\(w\)</span> somehow</li>
+<li>Add to the loss function?</li>
+<li>What does it mean intuitively?</li>
+</ul>
+<h2 id="linear-regression-via-probability---i">Linear Regression : via Probability - I</h2>
+<h3 id="coming-up-with-a-mle-model">Coming up with a MLE model?</h3>
+<ul>
+<li>Consider probability of data</li>
+<li>Maximize this quantity</li>
+</ul>
+<h3 id="model-choices">Model choices?</h3>
+<ul>
+<li>How do we choose our likelihood function?</li>
+<li>How do we combine to find probability of data?</li>
+</ul>
+<h2 id="linear-regression-via-probability---ii">Linear Regression : via Probability - II</h2>
+<h3 id="review-of-gaussian-distribution">Review of Gaussian distribution</h3>
+<ul>
+<li><span class="math inline">\(x \sim \mathcal{N}(\mu, \sigma^2)\)</span></li>
+<li>Can model any real value</li>
+<li>Extends to higher dimensions as well!</li>
+<li><span class="math inline">\(p(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{\frac{-1}{2\sigma^2} (x-\mu)^2}\)</span></li>
+</ul>
+<h3 id="why-is-this-necessary">Why is this necessary?</h3>
+<ul>
+<li>Earlier example used “Bernoulli”</li>
+<li>We wrote down the “probability” of our experiment</li>
+<li>Came to intuitive answer!</li>
+</ul>
+<h2 id="linear-regression-via-probability---iii">Linear Regression : via Probability - III</h2>
+<h3 id="model-overview-2">Model overview</h3>
+<ul>
+<li>Assume points generated from a Gaussian</li>
+<li><span class="math inline">\(y_i \sim \mathcal{N}(w^Tx_i, \sigma^2)\)</span></li>
+<li>Why does this make sense?</li>
+</ul>
+<h3 id="writing-the-likelihood">Writing the likelihood</h3>
+<ul>
+<li><span class="math inline">\(p(y_i) = ?\)</span></li>
+<li><span class="math inline">\(p(Y) = ?\)</span></li>
+<li>How to optimize this?</li>
+</ul>
+<h2 id="linear-regression-via-probability---iv">Linear Regression : via Probability - IV</h2>
+<h3 id="optimizing-the-likelihood">Optimizing the likelihood</h3>
+<ul>
+<li>Do we do gradient descent?</li>
+<li>How do we guarantee convexity?</li>
+</ul>
+<h3 id="doing-mle">Doing MLE</h3>
+<ul>
+<li>We wish to maximize probability of our data being observed</li>
+<li>What is our final solution?</li>
+</ul>
+<h1 id="a-more-complicated-regression-problem">A more complicated regression problem</h1>
+<h2 id="matrix-factorization---i">Matrix Factorization - I</h2>
+<h3 id="problem-setting">Problem setting</h3>
+<ul>
+<li>Movie Recommendations</li>
+<li>Item ratings</li>
+</ul>
+<h3 id="model-overview-3">Model overview</h3>
+<ul>
+<li>Assume we have a giant “matrix” of entries</li>
+<li>This can be “factorized” : <span class="math inline">\(M = UV^T\)</span></li>
+<li>If <span class="math inline">\(M - NxD, U = NxK, V = DxK\)</span></li>
+</ul>
+<h2 id="matrix-factorization---ii">Matrix Factorization - II</h2>
+<h3 id="model-interpretation">Model interpretation</h3>
+<ul>
+<li><span class="math inline">\(U : NxK\)</span> what could this be?</li>
+<li><span class="math inline">\(V : DxK\)</span> what could this be?</li>
+<li>In context of movies, what do these represent?</li>
+</ul>
+<h3 id="model-formation">Model formation</h3>
+<ul>
+<li>How is the rating <span class="math inline">\(m_{i,j}\)</span> formed?</li>
+<li>Does this make sense intuitively?</li>
+</ul>
+<h2 id="matrix-factorization---iii">Matrix Factorization - III</h2>
+<h3 id="how-do-we-now-solve-this">How do we now solve this?</h3>
+<ul>
+<li>Is there some “loss” function we can optimize?</li>
+<li>How do we take care of so many dependencies?</li>
+</ul>
+<h3 id="reducing-this-to-a-known-problem">Reducing this to a known problem</h3>
+<ul>
+<li>Consider a single movie and all its ratings</li>
+<li>How is this formed?</li>
+<li>Suppose someone told you the “vector” of the movie.</li>
+<li>How can you now solve it?</li>
+</ul>
+<h2 id="matrix-factorization---iv">Matrix Factorization - IV</h2>
+<h3 id="taking-a-look-at-individual-movies">Taking a look at individual movies</h3>
+<ul>
+<li>Denoted by a column, say <span class="math inline">\(v\)</span></li>
+<li>Entries in this column?</li>
+<li>How are they generated?</li>
+</ul>
+<h3 id="does-this-relate-to-a-known-problem">Does this relate to a known problem?</h3>
+<ul>
+<li>What happens if we “know” the values of <span class="math inline">\(U\)</span>?</li>
+<li>What sort of optimization technique does this generate?</li>
+<li>Is a solution guaranteed?</li>
+</ul>
+<h2 id="matrix-factorization---v">Matrix Factorization - V</h2>
+<h3 id="things-to-consider">Things to consider</h3>
+<ul>
+<li>How did we choose <span class="math inline">\(k\)</span>?</li>
+<li>What are the parameters and hyper-parameters then?</li>
+<li>How can we improve this?</li>
+</ul>
+<h3 id="extensions">Extensions</h3>
+<ul>
+<li>Can we work with different datasets?</li>
+<li>Movie - user pair, as well as book - user pair?</li>
+</ul>
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="concluding-remarks">Concluding Remarks</h2>
+<h3 id="takeaways">Takeaways</h3>
+<ul>
+<li>How to model a trend using regression.</li>
+<li>Interpretation of regression as a weighted sum</li>
+<li>How to solve a non-trivial optimization problem</li>
+<li>When can an analytical solution be derived?</li>
+</ul>
+<h3 id="announcements-1">Announcements</h3>
+<ul>
+<li>Programming tutorial</li>
+<li>Extra class?</li>
+<li>Quiz 1 (hopefully) tonight</li>
+<li>Open to suggestions on kinds of questions?</li>
+<li>Assignment 2 out by weekend</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec2_slides.pdf">Lecture 2, CS 771 IIT Kanpur</a></li>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec3_slides.pdf">Lecture 3, CS 771 IIT Kanpur</a></li>
+<li><a href="http://www.cs.princeton.edu/courses/archive/spr07/cos424/papers/mitchell-dectrees.pdf">Tom Mitchell, Tennis via Decision Trees</a></li>
+</ul>
+
+
+        </div>
+
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
