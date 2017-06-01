@@ -45,15 +45,15 @@ copy available online.
  Also included are details of what the data is like, what benchmarks consider them, and what methods perform
  well. Good place to practice your data cleaning and modelling skills. 
 
--[Computer Vision datasets](http://clickdamage.com/sourcecode/cv_datasets.php) Hosts a wide variety of 
+- [Computer Vision datasets](http://clickdamage.com/sourcecode/cv_datasets.php) Hosts a wide variety of 
 video and image datasets.
 
--[USA Government Data](http://clickdamage.com/sourcecode/cv_datasets.php) Hosts a variety of USA specific
+- [USA Government Data](http://clickdamage.com/sourcecode/cv_datasets.php) Hosts a variety of USA specific
 data that has been collected by the government.
 
--[Aggregator](https://datahub.io/) Search engine for different kinds of data.
+- [Aggregator](https://datahub.io/) Search engine for different kinds of data.
 
--[EU Data portal](https://data.europa.eu/euodp/en/data) European Union collected datasets.
+- [EU Data portal](https://data.europa.eu/euodp/en/data) European Union collected datasets.
 
 
 ---
