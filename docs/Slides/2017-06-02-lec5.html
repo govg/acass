@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Govind Gopakumar</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/syntax.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">/home</a>
+            </div>
+            <div id="navigation">
+                <a href="../codes.html">Codes</a>
+                <a href="../resources.html">Resources</a>
+				<a href="../slides.html">Slides</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Day 4 - Supervised Learning - Linear Regression</h1>
+            <div class="info">
+    Posted on June  2, 2017
+    
+        by Govind Gopakumar
+    
+</div>
+
+<p><a href="lec5.pdf">Lecture slides in pdf form</a></p>
+<h1 id="prelude">Prelude</h1>
+<h2 id="announcements">Announcements</h2>
+<ul>
+<li>New project groups : Meet after class for short discussion</li>
+<li>Old project groups : Meeting tomorrow</li>
+<li>Programming tutorials to be put up tonight / tomorrow</li>
+<li>Webpage - govg.github.io/acass</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<h3 id="our-first-regression-model">Our first Regression model</h3>
+<ul>
+<li>How to fit a line through our model</li>
+<li>How is this formed?</li>
+<li>Analytical solution for 1D</li>
+<li>Problems with this for more than 1D</li>
+</ul>
+<h3 id="matrix-factorization-as-regression">Matrix factorization as regression</h3>
+<ul>
+<li>Reduction of “complicated” problem to simple problems.</li>
+<li>“Random” method to optimize - alternating optimization</li>
+<li>Works for non-convex loss functions</li>
+</ul>
+<h1 id="probabilistic-classification">Probabilistic Classification</h1>
+<h2 id="logistic-regression---i">Logistic Regression - I</h2>
+<h3 id="why-do-we-need-this">Why do we need this?</h3>
+<ul>
+<li>Wish to predict “probability” of a label</li>
+<li>Useful to quantify “confidence” about prediction</li>
+</ul>
+<h3 id="idea-from-linear-regression">Idea from linear regression</h3>
+<ul>
+<li><span class="math inline">\(\langle w, x \rangle\)</span> : Similarity between parameter and point</li>
+<li>How do we extend this to classification?</li>
+<li>Very simple model : sum of all features!</li>
+</ul>
+<h2 id="logistic-regression---ii">Logistic Regression - II</h2>
+<h3 id="model-overview">Model overview</h3>
+<ul>
+<li>Learn a parameter <span class="math inline">\(w\)</span></li>
+<li><span class="math inline">\(p(y_i = 1) = \mu_i\)</span></li>
+<li><span class="math inline">\(\mu_i = \frac{1}{1+\exp(-w^Tx_i)}\)</span></li>
+<li>Computes a “score” : <span class="math inline">\(\langle w, x \rangle\)</span></li>
+<li>Squashes it between (0,1)</li>
+</ul>
+<h3 id="interpretation">Interpretation?</h3>
+<ul>
+<li>Very high “scores” - ?</li>
+<li>Very low “scores” - ?</li>
+<li>When are we not “confident”?</li>
+</ul>
+<h2 id="logistic-regression---iii">Logistic Regression - III</h2>
+<h3 id="learning">Learning</h3>
+<ul>
+<li>We need to find out this <span class="math inline">\(w\)</span> parameter.</li>
+<li>What does the decision rule look like?</li>
+<li><span class="math inline">\(\log \frac{p(y_i = 1)}{p(y_i = 0)}\)</span> = ?</li>
+<li>Intuitve explanation of this?</li>
+</ul>
+<h3 id="geometry-of-the-solution">Geometry of the solution</h3>
+<ul>
+<li>Still learning a line!</li>
+<li>How does this differ from other “lines”?</li>
+<li>Why is this useful then?</li>
+</ul>
+<h2 id="logistic-regression---iv">Logistic Regression - IV</h2>
+<h3 id="learning-the-parameter">Learning the parameter</h3>
+<ul>
+<li>Can we come up with a loss function?</li>
+<li>Why will this be easy or hard?</li>
+<li>How can we optimize this?</li>
+</ul>
+<h3 id="problems-with-the-squared-loss">Problems with the squared loss</h3>
+<ul>
+<li>Can we differentiate this easily?</li>
+<li>Is this convex?</li>
+</ul>
+<h2 id="logistic-regression---v">Logistic Regression - V</h2>
+<h3 id="constructing-a-loss">Constructing a loss</h3>
+<ul>
+<li>How do we choose a loss?</li>
+<li>Loss should be high when predicted and actual are different.</li>
+<li>Loss should be low when predicted is same as actual.</li>
+</ul>
+<h3 id="two-way-loss">Two way loss</h3>
+<ul>
+<li>If <span class="math inline">\(y_i = 1\)</span>, loss <span class="math inline">\(l(w) = -\log(\mu_i)\)</span></li>
+<li>If <span class="math inline">\(y_i = 0\)</span>, loss <span class="math inline">\(l(w) = -\log(1-\mu_i)\)</span></li>
+<li>Why does this seem right?</li>
+</ul>
+<h2 id="logistic-regression---vi">Logistic Regression - VI</h2>
+<h3 id="final-cross-entropy-loss">Final cross-entropy loss</h3>
+<ul>
+<li><span class="math inline">\(l(w) = -y_i \log(\mu_i) - (1-y_i)\log(1-\mu_i)\)</span></li>
+<li>“Cross” entropy : related to earlier entropy</li>
+<li>How do we write this in terms of <span class="math inline">\(w\)</span>?</li>
+</ul>
+<h3 id="loss-function">Loss function</h3>
+<ul>
+<li>Setting <span class="math inline">\(\mu_i = \frac{\exp(w^Tx_i)}{1 + \exp(w^Tx_i)}\)</span></li>
+<li><span class="math inline">\(L(w) = -\sum (y_i w^Tx_i - log(1 + \exp(w^Tx_i)))\)</span></li>
+<li>How do we impose control on solution?</li>
+</ul>
+<h2 id="logistic-regression---vii">Logistic Regression - VII</h2>
+<h3 id="optimizing-this-loss">Optimizing this loss</h3>
+<ul>
+<li><span class="math inline">\(L(w) = -\sum (y_i w^Tx_i - log(1 + \exp(w^Tx_i)))\)</span></li>
+<li><span class="math inline">\(g = -\sum \left(y_ix_i - \frac{\exp(w^Tx_i)}{1 + \exp(w^Tx_i)}\right)\)</span></li>
+<li>Is there a simple form? Yes!</li>
+</ul>
+<h3 id="final-expression">Final expression</h3>
+<ul>
+<li><span class="math inline">\(g = -\sum (y_i - \mu_i)x_i\)</span></li>
+<li>Can we set it to zero?</li>
+<li>What do we do now?</li>
+</ul>
+<h2 id="logistic-regression---viii">Logistic Regression - VIII</h2>
+<h3 id="gradient-descent">Gradient descent</h3>
+<ul>
+<li>Update using <span class="math inline">\(w^{t+1} = w^{t} - \eta g_t\)</span></li>
+<li><span class="math inline">\(w^{t+1} = w^{t} - \eta \sum (\mu_i^t - y_i) x_i\)</span></li>
+</ul>
+<h3 id="analyzing-the-update-step">Analyzing the update step</h3>
+<ul>
+<li>What <span class="math inline">\(x_i\)</span> is added to <span class="math inline">\(w^t\)</span> more?</li>
+<li>Does this sort of update make sense now?</li>
+<li>How much time do we require to compute this?</li>
+</ul>
+<h2 id="gradient-descent---i">Gradient Descent - I</h2>
+<h3 id="improving-gradient-descent">Improving gradient descent</h3>
+<ul>
+<li>Choice of <span class="math inline">\(\eta\)</span> is crucial!</li>
+<li>Can add a momentum term <span class="math inline">\(w^{t+1} = w^t - \eta g_t + \alpha^t(w^t - w^{t-1})\)</span></li>
+<li>Can also use “second-order” methods (beyond the scope of this class)</li>
+</ul>
+<h3 id="speeding-up-gradient-descent">Speeding up gradient descent</h3>
+<ul>
+<li>We need to compute gradient across entire data</li>
+<li>Is there a naive solution to this?</li>
+</ul>
+<h2 id="gradient-descent---ii">Gradient Descent - II</h2>
+<h3 id="mini-batch-gradient-descent">Mini-batch Gradient Descent</h3>
+<ul>
+<li>Approximate the loss function using a subset</li>
+<li>Gradient becomes faster to compute</li>
+<li>Why should this work?</li>
+</ul>
+<h3 id="stochastic-gradient-descent">Stochastic Gradient Descent</h3>
+<ul>
+<li>Let’s take it to the extreme - use just one point!</li>
+<li>Extremely fast gradient descent</li>
+<li>Why would this work at all?</li>
+</ul>
+<h2 id="logistic-regression---via-probability---i">Logistic Regression - via Probability - I</h2>
+<h3 id="choosing-a-likelihood">Choosing a likelihood</h3>
+<ul>
+<li>What is appropriate?</li>
+<li>Can we relate this to something we know?</li>
+<li>How do we write down entire likelihood?</li>
+</ul>
+<h3 id="doing-maximum-probability">Doing “Maximum” probability</h3>
+<ul>
+<li><span class="math inline">\(p(y_i) = \mu_i^{y_i} (1-\mu_i)^{1-y_i}\)</span></li>
+<li>What will we get? Any guesses?</li>
+</ul>
+<h2 id="logistic-regression---ix">Logistic Regression - IX</h2>
+<h3 id="multiclass">Multiclass</h3>
+<ul>
+<li>Naturally extend this to multiclas - how?</li>
+<li>Can think of it both in loss function sense and probability sense</li>
+<li>Same methods will apply, with some tweaks</li>
+</ul>
+<h3 id="comments">Comments</h3>
+<ul>
+<li>Probability estimate of class, instead of decision</li>
+<li>Gradient descent can be done fast</li>
+<li>Widely used, in different fields as well</li>
+<li>Used as modules in neural networks!</li>
+</ul>
+<h1 id="yet-another-classifier">Yet another Classifier</h1>
+<h2 id="perceptron---i">Perceptron - I</h2>
+<h3 id="extending-the-logistic-model">Extending the Logistic model</h3>
+<ul>
+<li><span class="math inline">\(w^{t+1} = w^t - \eta_t (\mu^t_i - y_i)x_i\)</span></li>
+<li>Replace with a cutoff for <span class="math inline">\(\mu_i\)</span></li>
+<li><span class="math inline">\(w^{t+1} = w^t - \eta_t (\hat{y}_i - y_i)x_i\)</span></li>
+</ul>
+<h3 id="analyzing-the-new-update">Analyzing the new update</h3>
+<ul>
+<li>When does this update actually take place?</li>
+<li>What is this update when it does take place?</li>
+<li>For ease, let us assume labels <span class="math inline">\(y_i \in \{-1, 1\}\)</span>.</li>
+</ul>
+<h2 id="perceptron---ii">Perceptron - II</h2>
+<h3 id="mistake-driven-learning">Mistake driven learning</h3>
+<ul>
+<li>Update upon mistake : <span class="math inline">\(w^{t+1} = w^t + 2\eta_t y_i x_i\)</span></li>
+<li>What does this update look like?</li>
+<li>Why does the update work?</li>
+</ul>
+<h3 id="geometry-of-the-classifier">Geometry of the classifier</h3>
+<ul>
+<li>What will the loss surface be?</li>
+<li>Learns a linear surface!</li>
+<li>Why is it useful then? - Extremely fast way to construct it</li>
+</ul>
+<h2 id="perceptron---iii">Perceptron - III</h2>
+<h3 id="significance-of-perceptrons">Significance of Perceptrons</h3>
+<ul>
+<li>Almost the first ever “classifier” built</li>
+<li>Can be thought of as a model for a brain</li>
+<li>Led to AI “winter” : ML research stalled for a while</li>
+<li>Actual theoretical proof on number of mistakes!</li>
+</ul>
+<h3 id="usage-of-perceptrons">Usage of perceptrons</h3>
+<ul>
+<li>Multilayer Perceptrons : Starting point for neural networks</li>
+<li>Almost every “deep neural network” is an MLP</li>
+<li>Non-linear methods : do a transformation! (when we discuss kernels)</li>
+</ul>
+<h1 id="halfway-round-up">Halfway round up</h1>
+<h2 id="general-techniques">General techniques</h2>
+<h3 id="loss-functions">Loss functions</h3>
+<ul>
+<li>Why choice of a loss function matters</li>
+<li>Common loss functions : squared loss!</li>
+<li>How some loss functions can be bad.</li>
+</ul>
+<h3 id="probability-method">Probability method</h3>
+<ul>
+<li>Maximize the experiment happening!</li>
+<li>How to choose a likelihood model</li>
+<li>How it (possibly) leads to same answer as above</li>
+</ul>
+<h2 id="methods-discussed">Methods discussed</h2>
+<h3 id="classification">Classification</h3>
+<ul>
+<li>K - nearest neighbors</li>
+<li>Decision Trees</li>
+<li>Random Forests</li>
+<li>Logistic Regression</li>
+<li>Perceptron</li>
+</ul>
+<h3 id="regression">Regression</h3>
+<ul>
+<li>Adaptation of KNN</li>
+<li>Adaptation of Decision Tree?</li>
+<li>Linear Regression</li>
+</ul>
+<h2 id="agenda-for-next-week">Agenda for next week</h2>
+<h3 id="unsupervised-learning-and-advanced-methods">Unsupervised Learning and Advanced methods</h3>
+<ul>
+<li>Cover some unsupervised learning methods</li>
+<li>Cover some “advanced” material (SVM, Neural Networks, Kernels)</li>
+</ul>
+<h3 id="greater-focus-on-programming">Greater focus on programming</h3>
+<ul>
+<li>Every class will have a programming assignment</li>
+<li>(Hopefully) deal with “realistic” datasets</li>
+<li>Two classes on feature “extraction” and modelling</li>
+<li>One class purely on best practices for experiments</li>
+</ul>
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="concluding-remarks">Concluding Remarks</h2>
+<h3 id="takeaways">Takeaways</h3>
+<ul>
+<li>Another classification technique : Logistic Regression</li>
+<li>Gradient descent and stochastic gradient descent</li>
+<li>The perceptron algorithm</li>
+</ul>
+<h3 id="announcements-1">Announcements</h3>
+<ul>
+<li>Extra class : Monday 3 - 4 pm (purely a Python tutorial)</li>
+<li>Quiz 1 : Automatically graded</li>
+<li>Assignment 2 : Working on the MNIST dataset</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec4_slides.pdf">Lecture 4, CS 771 IIT Kanpur</a></li>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec5_slides.pdf">Lecture 5, CS 771 IIT Kanpur</a></li>
+</ul>
+
+
+        </div>
+
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
