@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Govind Gopakumar</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/syntax.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">/home</a>
+            </div>
+            <div id="navigation">
+                <a href="../codes.html">Codes</a>
+                <a href="../resources.html">Resources</a>
+				<a href="../slides.html">Slides</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Programming Assignment 2</h1>
+            <div class="info">
+    Posted on June  4, 2017
+    
+        by Govind Gopakumar
+    
+</div>
+
+<p>Please find the associated IPython notebook <a href="https://github.com/govg/acass/blob/master/code/Assignment%202.ipynb">here</a>.</p>
+<h3 id="linear-regression">Linear Regression</h3>
+<p>In this notebook, we shall explore the use of gradient descent as well as stochastic gradient descent. The problem we will tackle is very simple, we will work with 1D linear regression. We have a bunch of points X, and each point is associated with a value Y. Our goal is to model Y = mX, find the unknown m, and when given a new point, predict using this m.</p>
+<p>Let us first remember what our loss function, and the associated gradient would be:</p>
+<p><span class="math inline">\(L(m) = \sum (y_i - mx_i)^2\)</span> <span class="math inline">\(g(m) = -2\sum x_i (y_i - mx_i)\)</span></p>
+<p>And our stochastic gradient would then be <span class="math inline">\(sg(m) = -2 x_i(y_i - mx_i)\)</span></p>
+<p>Let us start, by first generating our data. We will generate a random bunch of points for X, Y.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
+<span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</code></pre></div>
+<p>We are going to generate 50 random points between 0, 100. Then, we will transform these points as X -&gt; 5X. And finally, to obtain our Y, we will add some noise onto these values, to generate Y = 5X + noise.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Generate points from a uniform distribution</span>
+X <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">100</span>)
+<span class="co"># Generate some errors to add to the final points</span>
+errors <span class="op">=</span> np.random.normal(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">100</span>)
+<span class="co"># This is the model that we would like to learn</span>
+mstar <span class="op">=</span> <span class="dv">5</span>
+<span class="co"># Generate the values of each point</span>
+Y <span class="op">=</span> mstar <span class="op">*</span> X <span class="op">+</span> errors</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Hopefully, these points all lie on a line!</span>
+plt.scatter(X, Y)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code4_1.png" alt="image" />
+<p class="caption">image</p>
+</div>
+<p>We will run both gd and sgd to find the optimal value of m.</p>
+<p>Let us start with some random guess for m</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Initialize values of m for gd and sgd</span>
+m_sgd <span class="op">=</span> <span class="dv">10</span>
+m_gd <span class="op">=</span> <span class="dv">8</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Let's see what these look like compared to our data points</span>
+plt.scatter(X, m_sgd<span class="op">*</span>X, color<span class="op">=</span><span class="st">'r'</span>, label<span class="op">=</span><span class="st">&quot;SGD line&quot;</span>)
+plt.scatter(X, m_gd<span class="op">*</span>X, color<span class="op">=</span><span class="st">'g'</span>, label<span class="op">=</span><span class="st">&quot;GD line&quot;</span>)
+plt.scatter(X, Y, color<span class="op">=</span><span class="st">'yellow'</span>, label<span class="op">=</span><span class="st">&quot;True data&quot;</span>)
+plt.legend()
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code4_2.png" alt="image" />
+<p class="caption">image</p>
+</div>
+<p>As you may have noticed, both the SGD and GD model are off. Additionally, the yellow (data) is not exactly on a line, whereas the other two are exact lines.</p>
+<p>Now, we shall define two functions that calculates the value of the gradient for particular value of w, and also computes the “stochastic” gradient at a point, and value of w. (Note I use w and m interchangeably, w is the general notation for “parameter” and for us, the parameter is the slope, usually denoted by m)</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> gradient(w, X, Y):
+    grad <span class="op">=</span> <span class="dv">0</span>
+    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(X.shape[<span class="dv">0</span>]):
+        delta <span class="op">=</span> Y[i] <span class="op">-</span> X[i]<span class="op">*</span>w
+        grad <span class="op">=</span> grad  <span class="op">+</span> <span class="op">-</span><span class="dv">2</span><span class="op">*</span>X[i]<span class="op">*</span>delta
+    <span class="cf">return</span> grad<span class="op">/</span>X.shape[<span class="dv">0</span>]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> sgradient(w, X, Y):
+    delta <span class="op">=</span> Y <span class="op">-</span> X<span class="op">*</span>w
+    grad <span class="op">=</span> <span class="op">-</span><span class="dv">2</span><span class="op">*</span>X<span class="op">*</span>delta
+    <span class="cf">return</span> grad</code></pre></div>
+<p>Let us try one iteration of both gradient descent as well as sgd. Remember, the formula for gd is <span class="math inline">\(w^{t+1} = w^{t} - \eta*g(w^{t})\)</span>, and for sgd, we simply replace <span class="math inline">\(g(w^t)\)</span> with the stochastic gradient</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Generate a random number to compute SGD with. Remember, we take random points!</span>
+eta <span class="op">=</span> <span class="fl">0.00001</span>
+i <span class="op">=</span> np.random.randint(<span class="dv">0</span>, X.shape[<span class="dv">0</span>])
+m_gd <span class="op">=</span> m_gd <span class="op">-</span> eta<span class="op">*</span>gradient(m_gd, X, Y)
+m_sgd <span class="op">=</span> m_sgd <span class="op">-</span> eta <span class="op">*</span>sgradient(m_sgd, X[i], Y[i])</code></pre></div>
+<p>We have done one update, let us now plot the points and see!</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>):
+    m_gd <span class="op">=</span> m_gd <span class="op">-</span> eta<span class="op">*</span>gradient(m_gd, X, Y)
+    i <span class="op">=</span> np.random.randint(<span class="dv">0</span>, X.shape[<span class="dv">0</span>])
+    m_sgd <span class="op">=</span> m_sgd <span class="op">-</span> eta<span class="op">*</span>sgradient(m_sgd, X[i], Y[i])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(m_sgd)
+<span class="bu">print</span>(m_gd)</code></pre></div>
+<pre><code>5.00112746964
+4.99914942999</code></pre>
+<p>We can see what the final predicted slope is. Notice that it is not exactly the value that we would have liked (5), but it is pretty close.</p>
+<h3 id="actual-assignment-part">Actual Assignment Part</h3>
+<p>In this assignment, you will have to set up a loss function to find the “closest” point to a set of points. I will generate the set of points, but following the procedure above, you will have to write your own SGD and GD optimizers, and arrive at the final solution.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Initialize the dataset</span>
+<span class="co"># Obtain 100 points between 0,100</span>
+X <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">100</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">plt.plot(X)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code4_3.png" alt="Image" />
+<p class="caption">Image</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> GD(x, X):
+    gradient <span class="op">=</span> <span class="dv">0</span>
+    
+    <span class="co"># Fill in this part!</span>
+    
+    <span class="cf">return</span> gradient
+
+<span class="kw">def</span> SGD(x, X):
+    gradient <span class="op">=</span> <span class="dv">0</span>
+    
+    <span class="co"># FIll in this part!</span>
+    
+    <span class="cf">return</span> gradient</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Initialize values of eta, closest points (Denoted by x_sgd, x_gd)</span>
+eta <span class="op">=</span> <span class="fl">0.01</span>
+
+<span class="co"># Iterate and optimize!</span>
+<span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>):
+    x_gd <span class="op">=</span> x_gd <span class="op">-</span> eta<span class="op">*</span>GD(x_gd, X)
+    i <span class="op">=</span> np.random.randint(<span class="dv">0</span>, X.shape[<span class="dv">0</span>])
+    x_sgd <span class="op">=</span> x_sgd <span class="op">-</span> eta<span class="op">*</span>SGD(x_sgd, X[i])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Let's print and see what the values we obtained are!</span>
+<span class="bu">print</span>(x_gd)
+<span class="bu">print</span>(x_sgd)
+<span class="bu">print</span>(X.mean())</code></pre></div>
+
+
+        </div>
+
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>

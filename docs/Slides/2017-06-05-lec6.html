@@ -22,7 +22,7 @@
         </div>
 
         <div id="content">
-            <h1>Day 6 - Unsupervised Learning</h1>
+            <h1>Machine Learning Practice and Theory</h1>
             <div class="info">
     Posted on June  5, 2017
     
@@ -112,8 +112,80 @@
 <li>What does final cluster depend on?</li>
 <li>Will it always learn good clustering?</li>
 <li>What’s an example where it will fail?</li>
+<li>Outliers?</li>
 </ul>
-<h1 id="conclusion">Conclusion</h1>
+<h1 id="smarter-clustering">Smarter Clustering</h1>
+<h2 id="gaussian-mixture-models---i">Gaussian Mixture Models - I</h2>
+<h3 id="why-should-we-improve-our-clustering">Why should we improve our clustering?</h3>
+<ul>
+<li>Hard assignment</li>
+<li>Logistic Regression vs other methods!</li>
+<li>Probabilistic interpretation</li>
+</ul>
+<h3 id="generative-modelling">Generative modelling</h3>
+<ul>
+<li>Model how the data was generated!</li>
+<li>Can be used to give new data!</li>
+<li>Preprocessing step for supervised learning?</li>
+</ul>
+<h2 id="gaussian-mixture-models---iii">Gaussian Mixture Models - III</h2>
+<h3 id="review-of-the-gaussian-distribution">Review of the Gaussian distribution</h3>
+<ul>
+<li>p(X) : Reflects how probable a point is</li>
+<li>Density decreases as distance from mean increases</li>
+<li>Variance reflects spread</li>
+</ul>
+<h3 id="estimation-of-a-gaussian">Estimation of a Gaussian</h3>
+<ul>
+<li>Given : A bunch of data points</li>
+<li>What is the most likely Gaussian?</li>
+<li>How do we find it?</li>
+</ul>
+<h2 id="gaussian-mixture-models---iii-1">Gaussian Mixture Models - III</h2>
+<h3 id="modelling-assumptions">Modelling assumptions</h3>
+<ul>
+<li>Assume each point is “generated” from a Gaussian</li>
+<li>How many Gaussians?</li>
+<li>Where are they?</li>
+</ul>
+<h3 id="model-overview-1">Model overview</h3>
+<ul>
+<li>What are the unknowns in the setting?</li>
+<li>How do we find them?</li>
+</ul>
+<h1 id="dimensionality-reduction">Dimensionality Reduction</h1>
+<h2 id="arent-more-features-better">Aren’t more features better?</h2>
+<h3 id="how-many-features-should-we-have">How many “features” should we have?</h3>
+<ul>
+<li>Depends on problem</li>
+<li>Depends on our required model</li>
+<li>Depends on the data we collect</li>
+</ul>
+<h3 id="how-useful-are-these-features">How useful are these features?</h3>
+<ul>
+<li>Variance?</li>
+<li>Entropy?</li>
+<li>Mean?</li>
+<li>“Information Gain”?</li>
+</ul>
+<h2 id="principal-components-analysis---i">Principal Components Analysis - I</h2>
+<h3 id="model-overivew">Model overivew</h3>
+<ul>
+<li>Find “informative” directions.</li>
+<li>Exclude uninformative directions.</li>
+<li>Flexible : choose how many you want.</li>
+</ul>
+<h3 id="what-is-an-informative-direction">What is an informative direction?</h3>
+<ul>
+<li>Highest information gain?</li>
+<li>Do we look at combinations of features?</li>
+<li>How do we measure how much information we have?</li>
+</ul>
+<h2 id="principal-components-analysis---ii">Principal Components Analysis - II</h2>
+<h3 id="geometry-of-model">Geometry of model</h3>
+<ul>
+<li>Look at data along variance # Conclusion</li>
+</ul>
 <h2 id="concluding-remarks">Concluding Remarks</h2>
 <h3 id="takeaways">Takeaways</h3>
 <h3 id="announcements-1">Announcements</h3>
