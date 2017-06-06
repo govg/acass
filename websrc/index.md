@@ -8,10 +8,12 @@ Theory and Practice. Please follow the links you can see around you to navigate.
 
 ### Announcements and links
 
-
+- Some students have mentioned the difficulty in downloading Anaconda. I have hosted a local copy
+ [here](http://web.cse.iitk.ac.in/users/govindg/temp/). Please install the relevant package for 
+ your architecture. 
 - Programming Assignment 2 is up. Please find it in the "Code" tabe to the top right. It is
 	meant as an introduction to gradient descent and loss functions. Please let me know if there
-	are any errors in the code, since I can't claim to be an expert at coding. 
+	are any errors in the code, since I can't claim to be an expert at coding.
 
 - Quiz 1 is up. Please find it [here](http://www.goo.gl/I8Am3e). It consists of a few short answer questions, 
  mostly the true or false kind. It is automatically graded, and should also give you hints as to

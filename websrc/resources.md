@@ -56,6 +56,13 @@ data that has been collected by the government.
 - [EU Data portal](https://data.europa.eu/euodp/en/data) European Union collected datasets.
 
 
+### Example IPython Notebooks
+
+- [Iris](http://scikit-learn.org/stable/auto_examples/datasets/plot_iris_dataset.html)
+- [Digit Recognition](http://scikit-learn.org/stable/auto_examples/classification/plot_digits_classification.html#sphx-glr-auto-examples-classification-plot-digits-classification-py)
+- [Comparison of Classifiers](http://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html#sphx-glr-auto-examples-classification-plot-classifier-comparison-py)
+- [Digit showing](http://scikit-learn.org/stable/auto_examples/datasets/plot_digits_last_image.html#sphx-glr-auto-examples-datasets-plot-digits-last-image-py)
+
 ---
 
 Other resources shall be put up later.

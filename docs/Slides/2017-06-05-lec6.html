@@ -22,7 +22,7 @@
         </div>
 
         <div id="content">
-            <h1>Machine Learning Practice and Theory</h1>
+            <h1>Day 6 - Unsupervised Learning</h1>
             <div class="info">
     Posted on June  5, 2017
     
@@ -30,12 +30,13 @@
     
 </div>
 
+<p><a href="lec6.pdf">Lecture slides in pdf form</a></p>
 <h1 id="prelude">Prelude</h1>
 <h2 id="announcements">Announcements</h2>
 <ul>
-<li>New project groups : Meet after class for short discussion</li>
-<li>Programming tutorials to be put up tonight / tomorrow</li>
-<li>Webpage - govg.github.io/acass</li>
+<li>Project Groups : Code should be up and running, you should have some idea of what your project is and what the end goals are.</li>
+<li>Quiz 1 is up : Auto graded, feedback. Ask if you have doubts</li>
+<li>Programming assignment 1 is up : Gradient descent</li>
 </ul>
 <h2 id="story-so-far">Story so far</h2>
 <h3 id="supervised-learning">Supervised Learning</h3>
@@ -91,7 +92,7 @@
 <h2 id="clustering---iv">Clustering - IV</h2>
 <h3 id="alternating-optimization">Alternating optimization</h3>
 <ul>
-<li>Two different unknown parameters : <span class="math inline">\(\mu, \z\)</span></li>
+<li>Two different unknown parameters : <span class="math inline">\(\mu, z\)</span></li>
 <li>Idea from matrix factorization.</li>
 </ul>
 <h3 id="finding-the-parameters">Finding the parameters</h3>
@@ -101,6 +102,17 @@
 <li>What does it say about our “loss function”?</li>
 </ul>
 <h2 id="clustering---v">Clustering - V</h2>
+<h3 id="estimating-the-cluster-ids">Estimating the cluster IDs</h3>
+<ul>
+<li>Iterate over all the means</li>
+<li>Assign cluster ID as the closest mean</li>
+</ul>
+<h3 id="estimating-the-cluster-means">Estimating the cluster means</h3>
+<ul>
+<li>Collect points belonging to specific cluster</li>
+<li>Compute mean of that cluster</li>
+</ul>
+<h2 id="clustering---vi">Clustering - VI</h2>
 <h3 id="geometry-of-the-model">Geometry of the model</h3>
 <ul>
 <li>Decision surface?</li>
@@ -113,6 +125,20 @@
 <li>Will it always learn good clustering?</li>
 <li>What’s an example where it will fail?</li>
 <li>Outliers?</li>
+</ul>
+<h2 id="clustering---vii">Clustering - VII</h2>
+<h3 id="comments-about-k-means">Comments about K-Means</h3>
+<ul>
+<li>Makes hard assignments</li>
+<li>Size of clusters matters!</li>
+<li>Can work with transformations as well!</li>
+</ul>
+<h3 id="limitations">Limitations</h3>
+<ul>
+<li>Non-convexity of the “loss” function!</li>
+<li>Iterative solution</li>
+<li>Will have to work with better notions of “distance”!</li>
+<li>How do we choose k?</li>
 </ul>
 <h1 id="smarter-clustering">Smarter Clustering</h1>
 <h2 id="gaussian-mixture-models---i">Gaussian Mixture Models - I</h2>
@@ -128,7 +154,7 @@
 <li>Can be used to give new data!</li>
 <li>Preprocessing step for supervised learning?</li>
 </ul>
-<h2 id="gaussian-mixture-models---iii">Gaussian Mixture Models - III</h2>
+<h2 id="gaussian-mixture-models---ii">Gaussian Mixture Models - II</h2>
 <h3 id="review-of-the-gaussian-distribution">Review of the Gaussian distribution</h3>
 <ul>
 <li>p(X) : Reflects how probable a point is</li>
@@ -141,7 +167,7 @@
 <li>What is the most likely Gaussian?</li>
 <li>How do we find it?</li>
 </ul>
-<h2 id="gaussian-mixture-models---iii-1">Gaussian Mixture Models - III</h2>
+<h2 id="gaussian-mixture-models---iii">Gaussian Mixture Models - III</h2>
 <h3 id="modelling-assumptions">Modelling assumptions</h3>
 <ul>
 <li>Assume each point is “generated” from a Gaussian</li>
@@ -153,46 +179,35 @@
 <li>What are the unknowns in the setting?</li>
 <li>How do we find them?</li>
 </ul>
-<h1 id="dimensionality-reduction">Dimensionality Reduction</h1>
-<h2 id="arent-more-features-better">Aren’t more features better?</h2>
-<h3 id="how-many-features-should-we-have">How many “features” should we have?</h3>
+<h2 id="gaussian-mixture-models---iv">Gaussian Mixture Models - IV</h2>
+<h3 id="alternating-optimization-1">Alternating optimization?</h3>
 <ul>
-<li>Depends on problem</li>
-<li>Depends on our required model</li>
-<li>Depends on the data we collect</li>
+<li>Find cluster ID’s in a probabilistic sense</li>
+<li>Find clusters also in the same fashion!</li>
 </ul>
-<h3 id="how-useful-are-these-features">How useful are these features?</h3>
+<h3 id="what-are-the-parameters-then">What are the parameters then?</h3>
 <ul>
-<li>Variance?</li>
-<li>Entropy?</li>
-<li>Mean?</li>
-<li>“Information Gain”?</li>
+<li><span class="math inline">\(\mu\)</span> for each Gaussian</li>
+<li><span class="math inline">\(\Sigma\)</span> for each Gaussian</li>
+<li>Can we make intelligent choices here?</li>
 </ul>
-<h2 id="principal-components-analysis---i">Principal Components Analysis - I</h2>
-<h3 id="model-overivew">Model overivew</h3>
-<ul>
-<li>Find “informative” directions.</li>
-<li>Exclude uninformative directions.</li>
-<li>Flexible : choose how many you want.</li>
-</ul>
-<h3 id="what-is-an-informative-direction">What is an informative direction?</h3>
-<ul>
-<li>Highest information gain?</li>
-<li>Do we look at combinations of features?</li>
-<li>How do we measure how much information we have?</li>
-</ul>
-<h2 id="principal-components-analysis---ii">Principal Components Analysis - II</h2>
-<h3 id="geometry-of-model">Geometry of model</h3>
-<ul>
-<li>Look at data along variance # Conclusion</li>
-</ul>
+<h1 id="conclusion">Conclusion</h1>
 <h2 id="concluding-remarks">Concluding Remarks</h2>
 <h3 id="takeaways">Takeaways</h3>
+<ul>
+<li>How to cluster points for unsupervised learning</li>
+<li>How to do alternating optimization (2nd such example)</li>
+<li>Generative modelling and Gaussian Mixture models</li>
+</ul>
 <h3 id="announcements-1">Announcements</h3>
+<ul>
+<li>Assignment 1, Quiz 1 up.</li>
+<li>(Hopefully programming tutorials also up)</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec7_slides.pdf">Lecture 7, CS 771 IIT Kanpur</a></li>
-<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec6_slides.pdf">Lecture 6, CS 771 IIT Kanpur</a></li>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec10_slides.pdf">Lecture 10, CS 771 IIT Kanpur</a></li>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec16_slides.pdf">Lecture 16, CS 771 IIT Kanpur</a></li>
 </ul>
 
 
