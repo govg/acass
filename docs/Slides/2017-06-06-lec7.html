@@ -22,7 +22,7 @@
         </div>
 
         <div id="content">
-            <h1>Machine Learning Practice and Theory</h1>
+            <h1>Day 7 - PCA, Kernels, Ensembles</h1>
             <div class="info">
     Posted on June  6, 2017
     
@@ -30,8 +30,14 @@
     
 </div>
 
+<p><a href="lec7.pdf">Lecture slides in pdf form</a></p>
 <h1 id="prelude">Prelude</h1>
 <h2 id="announcements">Announcements</h2>
+<ul>
+<li>Doubt clearing session on Thursday</li>
+<li>Programming tutorial on Gaussian Mixture Models up (or will be by tonight)</li>
+<li>Programming tutorial on PCA up (or will be by tonight)</li>
+</ul>
 <h2 id="recap">Recap</h2>
 <h3 id="clustering">Clustering</h3>
 <ul>
@@ -39,24 +45,276 @@
 <li>How to look at it as an optimization problem</li>
 <li>Alternating optimization</li>
 </ul>
-<h3 id="pca">PCA</h3>
+<h3 id="generative-modelling">Generative modelling</h3>
 <ul>
-<li>Method to remove irrelevant variables</li>
-<li>Geometric interpretation</li>
-<li>Loss function interpretation</li>
+<li>How to predict what future data looks like</li>
+<li>Note : Can be extended to different sorts of models</li>
+</ul>
+<h1 id="dimensionality-reduction">Dimensionality Reduction</h1>
+<h2 id="arent-more-features-better---i">Aren’t more features better? - I</h2>
+<h3 id="how-many-features-should-we-have">How many “features” should we have?</h3>
+<ul>
+<li>Depends on problem</li>
+<li>Depends on our required model</li>
+<li>Depends on the data we collect</li>
+</ul>
+<h3 id="how-useful-are-these-features">How useful are these features?</h3>
+<ul>
+<li>Variance?</li>
+<li>Entropy?</li>
+<li>Mean?</li>
+<li>“Information Gain”?</li>
+</ul>
+<h2 id="arent-more-features-better---ii">Aren’t more features better? - II</h2>
+<h3 id="curse-of-dimensionality">Curse of dimensionality</h3>
+<ul>
+<li>We can’t “fill” the space!</li>
+<li>What happens to our hyperplanes and other algorithms?</li>
+</ul>
+<h3 id="feature-extraction">Feature extraction</h3>
+<ul>
+<li>Some features are probably better used together!</li>
+<li>Some features are probably removable</li>
+</ul>
+<h2 id="principal-components-analysis---i">Principal Components Analysis - I</h2>
+<h3 id="model-overivew">Model overivew</h3>
+<ul>
+<li>Find “informative” directions.</li>
+<li>Exclude uninformative directions.</li>
+<li>Flexible : choose how many you want.</li>
+</ul>
+<h3 id="what-is-an-informative-direction">What is an informative direction?</h3>
+<ul>
+<li>Highest information gain?</li>
+<li>Do we look at combinations of features?</li>
+<li>How do we measure how much information we have?</li>
+</ul>
+<h2 id="principal-components-analysis---ii">Principal Components Analysis - II</h2>
+<h3 id="review-of-covariance">Review of Covariance</h3>
+<ul>
+<li>Suppose we observe two “features”</li>
+<li>How do we define covariance between them?</li>
+<li>What does this mean in machine learning?</li>
+</ul>
+<h3 id="geometry-of-covariances">Geometry of covariances</h3>
+<ul>
+<li>How do positively correlated values look?</li>
+<li>How do negatively correlated values look?</li>
+<li>How do uncorrelated values look?</li>
+</ul>
+<h2 id="principal-components-analysis---iii">Principal Components Analysis - III</h2>
+<h3 id="geometry-of-model">Geometry of model</h3>
+<ul>
+<li>Look at data along variance</li>
+<li>What captures spread?</li>
+<li>How is it naturally low dimensions?</li>
+</ul>
+<h3 id="computing-the-spread">Computing the spread</h3>
+<ul>
+<li>Denote by “covariance”</li>
+<li>Rank the axes in order of this “spread”</li>
+<li>Choose as many as you wish!</li>
+</ul>
+<h2 id="principal-components-analysis---iv">Principal Components Analysis - IV</h2>
+<h3 id="solving-it-analytically">Solving it analytically</h3>
+<ul>
+<li>Let’s look at the covariance of the data!</li>
+<li>How do we compute this?</li>
+<li>What can we do with this matrix?</li>
+</ul>
+<h3 id="as-a-linear-embedding">As a linear embedding</h3>
+<ul>
+<li>We wish to “embed” the points onto a line</li>
+<li>Choose coordinate as location along line!</li>
+<li><span class="math inline">\(\langle u_1, x_i \rangle\)</span> : distance along <span class="math inline">\(u_1\)</span></li>
+</ul>
+<h2 id="principal-components-analysis---v">Principal Components Analysis - V</h2>
+<h3 id="what-is-our-loss-function-optimization">What is our loss function / optimization?</h3>
+<ul>
+<li>Variance of the projections : <span class="math inline">\(\frac{1}{N}\sum (\langle u_1, x_i \rangle - \langle u_1, \mu \rangle)^2\)</span></li>
+<li>Simplification : <span class="math inline">\(\|u_1\|^2_{S}\)</span></li>
+<li>What is S?</li>
+</ul>
+<h3 id="where-is-the-optima-for-this">Where is the optima for this?</h3>
+<ul>
+<li>If we restrict <span class="math inline">\(u\)</span> to specific vectors, we can get a solution.</li>
+<li>Maximum eigenvalue : variance of data</li>
+<li>Eigenvector : direction along this variance</li>
+</ul>
+<h2 id="principal-components-analysis---vi">Principal Components Analysis - VI</h2>
+<h3 id="steps-in-pca">Steps in PCA</h3>
+<ul>
+<li>Center the data</li>
+<li>Compute <span class="math inline">\(S\)</span> matrix</li>
+<li>Find the eigen vectors corresponding to high eigenvalues</li>
+</ul>
+<h3 id="how-many-to-choose">How many to choose?</h3>
+<ul>
+<li>Flexible! Choose as much as you want.</li>
+<li>What do you lose?</li>
+<li>What do you gain?</li>
+</ul>
+<h2 id="principal-components-analysis---vii">Principal Components Analysis - VII</h2>
+<h3 id="why-is-this-useful">Why is this useful?</h3>
+<ul>
+<li>Automatic feature extraction!</li>
+<li>Dimensionality reduction</li>
+<li>Quality of features</li>
+</ul>
+<h3 id="usage">Usage</h3>
+<ul>
+<li>Templates of eigenvectors</li>
+<li>What does this look like in practice?</li>
 </ul>
 <h1 id="kernels">Kernels</h1>
-<h1 id="support-vector-machines">Support Vector Machines</h1>
+<h2 id="increasing-dimensionality-of-data---i">Increasing dimensionality of data - I</h2>
+<h3 id="wait-what">Wait, what?</h3>
+<ul>
+<li>Why should we increase the dimensionality?</li>
+<li>What issue do our current methods all share?</li>
+<li>Geometry of the problem!</li>
+</ul>
+<h3 id="okay-how">Okay, how?</h3>
+<ul>
+<li>“Lift” our features into higher dimensions</li>
+<li>Called feature mapping / kernels</li>
+<li>Examples?</li>
+</ul>
+<h2 id="increasing-dimensionality-of-data---ii">Increasing dimensionality of data - II</h2>
+<h3 id="procedure">Procedure</h3>
+<ul>
+<li>Come up with “mapping”</li>
+<li>Transform all our data using this</li>
+<li>Train on this data</li>
+</ul>
+<h3 id="computational-issues">Computational issues?</h3>
+<ul>
+<li>Construction can be expensive!</li>
+<li>Storing these can be expensive, if we have “large” mappings.</li>
+</ul>
+<h2 id="increasing-dimensionality-of-data---iii">Increasing dimensionality of data - III</h2>
+<h3 id="using-a-kernel">Using a Kernel</h3>
+<ul>
+<li>A “kernel” measures similarity in high dimensional spaces</li>
+<li><span class="math inline">\(k(x,z) = \langle \phi(x), \phi(z) \rangle\)</span></li>
+</ul>
+<h3 id="examples-of-kernels">Examples of kernels</h3>
+<ul>
+<li><span class="math inline">\(k(x,z) = (\langle x, z \rangle)^2\)</span></li>
+<li>What is the associated <span class="math inline">\(\phi(x)\)</span>?</li>
+<li>Can we write such a mapping down for all kernels?</li>
+</ul>
+<h2 id="increasing-dimensionality-of-data---iv">Increasing dimensionality of data - IV</h2>
+<h3 id="examples-of-kernels-1">Examples of kernels</h3>
+<ul>
+<li>Quadratic kernel : <span class="math inline">\(k(x,z) = (\langle x, z\rangle) ^2\)</span></li>
+<li>Polynomial kernel : <span class="math inline">\(k(x,z) = (\langle x, z\rangle)^d\)</span></li>
+<li>Radial Basis Function : <span class="math inline">\(k(x,z) = \exp(-\gamma\|x-z\|^2)\)</span></li>
+</ul>
+<h3 id="why-are-they-useful">Why are they useful?</h3>
+<ul>
+<li>Allow similarity in non-linear senses</li>
+<li>We can actually transform our data without transforming them!</li>
+</ul>
+<h2 id="increasing-dimensionality-of-data---v">Increasing dimensionality of data - V</h2>
+<h3 id="how-do-we-use-them-in-models">How do we use them in models?</h3>
+<ul>
+<li>Transform our “decision rule” into a dot product</li>
+<li>Replace dot product with kernel!</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<ul>
+<li>Distance from means</li>
+<li>Perceptron</li>
+<li>Linear Regression!</li>
+</ul>
 <h1 id="boosting-and-ensembles">Boosting and ensembles</h1>
-<h1 id="neural-networks">Neural Networks</h1>
+<h2 id="ensemble-models---i">Ensemble models - I</h2>
+<h3 id="what">What?</h3>
+<ul>
+<li>What is an “ensemble”?</li>
+<li>How do we construct it?</li>
+<li>Different models on same data vs same model on different data?</li>
+</ul>
+<h3 id="how">How?</h3>
+<ul>
+<li>Aggregate or voting on predictions</li>
+<li>Stack : predictions as features!</li>
+<li>Levels of models!</li>
+</ul>
+<h2 id="ensemble-models---ii">Ensemble models - II</h2>
+<h3 id="bagging">Bagging</h3>
+<ul>
+<li>Create multiple copies of data</li>
+<li>Train similar / same models on these copies</li>
+<li>Aggregate predictions</li>
+</ul>
+<h3 id="why-would-this-work">Why would this work?</h3>
+<ul>
+<li>Each model captures the variance of data</li>
+<li>Noise is spread out, reduced</li>
+<li>How many replications?</li>
+</ul>
+<h2 id="ensemble-models---iii">Ensemble models - III</h2>
+<h3 id="boosting">Boosting</h3>
+<ul>
+<li>Use only weak algorithms</li>
+<li>Combine them iteratively to get better predictions</li>
+<li>Increase weight of hard examples</li>
+</ul>
+<h3 id="process">Process</h3>
+<ul>
+<li>Have <span class="math inline">\(T\)</span> different “weak” models</li>
+<li>Start with uniform weights for all points</li>
+<li>Learn an initial model</li>
+<li>Iteratively increase weights depending on previous mistakes</li>
+<li>Learn better models</li>
+</ul>
+<h2 id="ensemble-models---iv">Ensemble models - IV</h2>
+<h3 id="adaboost">AdaBoost</h3>
+<ul>
+<li>Choose a weak model (Perceptron?)</li>
+<li>Let it learn from data</li>
+<li>Check where it made errors : increase these points!</li>
+<li>Choose another perceptron, learn on new data</li>
+</ul>
+<h3 id="can-it-learn-complicated-shapes">Can it learn complicated shapes?</h3>
+<ul>
+<li>Yes, at times</li>
+<li>Outliers can screw it up a lot at times</li>
+</ul>
+<h2 id="ensemble-models---v">Ensemble models - V</h2>
+<h3 id="comments">Comments</h3>
+<ul>
+<li>Bagging vs Boosting? : no real winner</li>
+<li>Bagging allows parallel learning</li>
+<li>Boosting keeps decreasing training error</li>
+</ul>
+<h3 id="why-should-we-use-either">Why should we use either?</h3>
+<ul>
+<li>Reduce overfitting (multiple models)</li>
+<li>Combine predictions</li>
+</ul>
 <h1 id="conclusion">Conclusion</h1>
 <h2 id="concluding-remarks">Concluding Remarks</h2>
 <h3 id="takeaways">Takeaways</h3>
+<ul>
+<li>Dimensionality reduction techniques</li>
+<li>Dimensionality increasing techniques</li>
+<li>Why the above two are not necessarily opposites!</li>
+<li>Ensembling : How to convert weak predictions into strong ones</li>
+</ul>
 <h3 id="announcements-1">Announcements</h3>
+<ul>
+<li>Doubt clearing session on Thursday : open class</li>
+<li>Quiz 1 is still up, please ask doubts</li>
+<li>Programming tutorials up for GMM, PCA</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec7_slides.pdf">Lecture 7, CS 771 IIT Kanpur</a></li>
-<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec6_slides.pdf">Lecture 6, CS 771 IIT Kanpur</a></li>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec11_slides.pdf">Lecture 11, CS 771 IIT Kanpur</a></li>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec9_slides.pdf">Lecture 9, CS 771 IIT Kanpur</a></li>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec21_slides.pdf">Lecture 21, CS 771 IIT Kanpur</a></li>
 </ul>
 
 

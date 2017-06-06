@@ -1,5 +1,5 @@
 ---
-title: Getting set up
+title: Tutorial - Setup 
 author: Govind Gopakumar
 ---
 

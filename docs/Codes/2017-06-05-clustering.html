@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Govind Gopakumar</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/syntax.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">/home</a>
+            </div>
+            <div id="navigation">
+                <a href="../codes.html">Codes</a>
+                <a href="../resources.html">Resources</a>
+				<a href="../slides.html">Slides</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Tutorial - Clustering</h1>
+            <div class="info">
+    Posted on June  5, 2017
+    
+        by Govind Gopakumar
+    
+</div>
+
+<p>Please find the associated IPython notebook <a href="https://github.com/govg/acass/blob/master/code/Clustering%20Examples.ipynb">here</a></p>
+<h3 id="clustering">Clustering</h3>
+<p>In this notebook, we shall see how clustering can be used, and when it does learn interesting shapes and when it doesn’t.</p>
+<h4 id="k-means-clustering">K Means clustering</h4>
+<p>In Kmeans clustering, our aim is simply to generate cluster IDs for every point in the data set. Remember, our choice of K is something that needs to be picked carefully. Different K’s could give drastically different “clustering” performances.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Import the libraries first</span>
+<span class="im">import</span> numpy <span class="im">as</span> np
+<span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt
+
+<span class="co"># Import the KMeans algorithm from sklearn</span>
+<span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans
+<span class="co"># Import an easy way to create our random data</span>
+<span class="im">from</span> sklearn.datasets <span class="im">import</span> make_blobs</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Generate 500 random samples in 2D space</span>
+<span class="co"># The parameter &quot;centers&quot; reflect how many &quot;blobs&quot; are there in the data</span>
+X, y <span class="op">=</span> make_blobs(n_samples <span class="op">=</span> <span class="dv">500</span>, n_features <span class="op">=</span> <span class="dv">2</span>, centers <span class="op">=</span> <span class="dv">4</span>)
+<span class="bu">print</span>(X.shape)
+<span class="bu">print</span>(np.bincount(y))</code></pre></div>
+<pre><code>(500, 2)
+[125 125 125 125]</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Plot the original blobs</span>
+plt.scatter(X[:,<span class="dv">0</span>], X[:,<span class="dv">1</span>], c<span class="op">=</span>y)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code5_1.png" alt="Generated Image" />
+<p class="caption">Generated Image</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Now we try doing our KMeans clustering. One way would be to call &quot;fit&quot; and then call &quot;predict&quot;</span>
+kmean <span class="op">=</span>KMeans(n_clusters <span class="op">=</span> <span class="dv">2</span>).fit(X)
+ids <span class="op">=</span> kmean.predict(X)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Another method is to directly call fit_predict, if we wish to cluster the training data itself. </span>
+ids <span class="op">=</span> KMeans(n_clusters <span class="op">=</span> <span class="dv">5</span>).fit_predict(X)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Plot the learned clusters</span>
+plt.scatter(X[:,<span class="dv">0</span>], X[:,<span class="dv">1</span>], c<span class="op">=</span>ids)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code5_2.png" alt="Generated Image" />
+<p class="caption">Generated Image</p>
+</div>
+<h3 id="gaussian-mixture-models">Gaussian Mixture Models</h3>
+<p>In this section, we will try and see what GMMs do. They will perform similar to the earlier example, hopefully!</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Import the GMM module from sklearn</span>
+<span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># We will work with our earlier data itself, we could use make_blob to generate new data as well</span>
+<span class="co"># When we learn a mixture of gaussians, we actually have an additional flexibility : what shape should the Gaussians be?</span>
+<span class="co"># Please do review gaussian distributions and find out what these options are!</span>
+gmm <span class="op">=</span> GaussianMixture(n_components <span class="op">=</span> <span class="dv">2</span>, covariance_type<span class="op">=</span><span class="st">&quot;full&quot;</span>).fit(X)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Predict what the clusters will be for X</span>
+ids <span class="op">=</span> gmm.predict(X)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Plot the learned clusters</span>
+plt.scatter(X[:,<span class="dv">0</span>], X[:,<span class="dv">1</span>], c<span class="op">=</span>ids)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code5_3.png" alt="Generated Image" />
+<p class="caption">Generated Image</p>
+</div>
+<p>I hope this illustrates what the use of clustering can be! Feel free to play around with the different parameters and settings, and see what sort of clustering is generated. We can even use absolutely random data, and try to cluster it! I have used the make_blob method just for convenience.</p>
+
+
+        </div>
+
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
