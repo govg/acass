@@ -37,9 +37,9 @@ identify yourself if you wish.
 3. Supervised learning - KNN, Decision Trees
 4. Supervised learning - Linear Regression (and Matrix Factorization)
 5. Supervised learning - Logistic regression
-6. Unsupervised learning - KMeans, GMMs, PCA
-7. Advanced methods - Kernels, SVMs, Perceptrons, Neural Networks
-8. Feature engineering - how to make sense of images (and maybe audio)
-9. Feature engineering - how to make sense of text
+6. Unsupervised learning - KMeans, GMMs
+7. Unsupervised learning - PCA, Kernels, Ensembles
+8. Advanced methods - SVM's, Neural Networks
+9. Feature engineering - Dealing with Images, Text, Video
 10. Practical ML - When and why 100% accuracy is bad
 
