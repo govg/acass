@@ -11,23 +11,6 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 2. Open the README in one of the folders in this git repository.
 3. Follow the README for that stack.
 
-### Official Builds
-
-
-You can pick anyone of the images listed in image given below according to your requirement:
-
-```
-docker run -d -P jupyter/<your desired stack>
-```
-
-Following is  a diagram of the `FROM` relationships between all of the official builds:
-
-![Image inheritance diagram](http://interactive.blockdiag.com/image?compression=deflate&encoding=base64&src=eJyFzbEOgkAMgOGdp7iwsxsJRjZ3R2NMjyumcrTkrsag8d3l3I6F9e_X1nrpBkdwN5_CGAmErKAkbBozSdAApPUycdjD0-utF9ZIb1zGu9Rbc_Fg0TelQ0vA-wfGSHg8n9ryWhd_UR2MhYgVi6IVGdJeFpIYiWkEn6F1Sy52NM2Zyksyihwl9F5eG9CBwlKRO9x8HDZuTXOcIAyZWrfkwPtqLb8_jh2GrQ)
-
-
-Source : [https://github.com/jupyter/docker-stacks](https://github.com/jupyter/docker-stacks)
-
-
 
 
 ### Custom build 
@@ -52,6 +35,27 @@ docker run -it -p 8888:8888 -v $(pwd):/home/govg/work acassml jupyter notebook -
 ```
 
 if you are using windows, you need to replace `$(pwd)` with current working directory.
+
+
+### Official Builds
+
+
+You can pick anyone of the images listed in image given below according to your requirement:
+
+```
+docker run -d -P jupyter/<your desired stack>
+```
+
+Following is  a diagram of the `FROM` relationships between all of the official builds:
+
+![Image inheritance diagram](http://interactive.blockdiag.com/image?compression=deflate&encoding=base64&src=eJyFzbEOgkAMgOGdp7iwsxsJRjZ3R2NMjyumcrTkrsag8d3l3I6F9e_X1nrpBkdwN5_CGAmErKAkbBozSdAApPUycdjD0-utF9ZIb1zGu9Rbc_Fg0TelQ0vA-wfGSHg8n9ryWhd_UR2MhYgVi6IVGdJeFpIYiWkEn6F1Sy52NM2Zyksyihwl9F5eG9CBwlKRO9x8HDZuTXOcIAyZWrfkwPtqLb8_jh2GrQ)
+
+
+Source : [https://github.com/jupyter/docker-stacks](https://github.com/jupyter/docker-stacks)
+
+
+
+
 
 
 
