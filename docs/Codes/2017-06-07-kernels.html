@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Govind Gopakumar</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/syntax.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">/home</a>
+            </div>
+            <div id="navigation">
+                <a href="../codes.html">Codes</a>
+                <a href="../resources.html">Resources</a>
+				<a href="../slides.html">Slides</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Tutorial - Kernels in SVM</h1>
+            <div class="info">
+    Posted on June  7, 2017
+    
+        by Govind Gopakumar
+    
+</div>
+
+<p>Please find the associated IPython file <a href="https://github.com/govg/acass/blob/master/code/Kernels.ipynb">here</a></p>
+<h1 id="svm-tutorial">SVM Tutorial</h1>
+<p>This is adapted from scikit learn docs <a href="http://scikit-learn.org/stable/auto_examples/svm/plot_iris.html#sphx-glr-auto-examples-svm-plot-iris-py">here</a>. All rights belong to the scikit organization and the author of the code.</p>
+<p>We will use our old Iris dataset itself. The idea will be to see the power that kernels provide us.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Import all the important libraries</span>
+<span class="im">import</span> numpy <span class="im">as</span> np
+<span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt
+<span class="co"># Notice that sklearn.svm holds the SVM implementation</span>
+<span class="im">from</span> sklearn <span class="im">import</span> datasets, svm</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Load the data into variables called X, y</span>
+iris <span class="op">=</span> datasets.load_iris()
+X <span class="op">=</span> iris.data
+y <span class="op">=</span> iris.target
+
+X <span class="op">=</span> X[y <span class="op">!=</span> <span class="dv">0</span>, :<span class="dv">2</span>]
+y <span class="op">=</span> y[y <span class="op">!=</span> <span class="dv">0</span>]
+
+n_sample <span class="op">=</span> <span class="bu">len</span>(X)</code></pre></div>
+<p>Whenever we are coding, it is good practice to print the dimensions of the data, just for a sanity check. If the data is small, you could also print it out entirely just to see what you’re dealing with. Of course, the best method is to plot the data.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(X.shape)
+<span class="bu">print</span>(y.shape)
+<span class="bu">print</span>(y)</code></pre></div>
+<pre><code>(100, 2)
+(100,)
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2]</code></pre>
+<p>When testing algorithms, it is important to keep aside some data to test on. Otherwise, we have no way to understand how our model performed in real life.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Randomly permute the dataset</span>
+np.random.seed(<span class="dv">0</span>)
+order <span class="op">=</span> np.random.permutation(n_sample)
+X <span class="op">=</span> X[order]
+y <span class="op">=</span> y[order].astype(np.<span class="bu">float</span>)
+
+<span class="co"># Assign the first 90 samples as Training, the rest as Testing</span>
+X_train <span class="op">=</span> X[:<span class="dv">90</span>]
+y_train <span class="op">=</span> y[:<span class="dv">90</span>]
+X_test <span class="op">=</span> X[<span class="dv">90</span>:]
+y_test <span class="op">=</span> y[<span class="dv">90</span>:]</code></pre></div>
+<p>Let’s plot the entire datasets for our visualization purposes. Do note that we use only 2 dimensions of the dataset.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Plot the entire data</span>
+plt.scatter(X[:,<span class="dv">0</span>], X[:,<span class="dv">1</span>], c<span class="op">=</span>y)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code6_1.png" alt="Generated Image" />
+<p class="caption">Generated Image</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Plot the training dataset</span>
+plt.scatter(X_train[:,<span class="dv">0</span>], X_train[:,<span class="dv">1</span>], c<span class="op">=</span>y_train)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code6_2.png" alt="Generated Image" />
+<p class="caption">Generated Image</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Plot the testing dataset</span>
+plt.scatter(X_test[:,<span class="dv">0</span>], X_test[:,<span class="dv">1</span>], c<span class="op">=</span>y_test)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code6_3.png" alt="Generated Image" />
+<p class="caption">Generated Image</p>
+</div>
+<p>We can now use sklearn’s classifier to fit onto our data. After that, we will plot the entire decision surface.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># fit the model</span>
+fig_num <span class="op">=</span> <span class="dv">1</span>
+<span class="co"># We can use 'linear', 'rbf', or 'poly' for different kernels</span>
+kernel <span class="op">=</span> <span class="st">'linear'</span>
+<span class="co"># Create the classifier, as a SVC, with kernel given by our choice above. The value of gamma is a &quot;hyper parameter&quot;, please refer to the sklearn documentation for details.</span>
+clf <span class="op">=</span> svm.SVC(kernel<span class="op">=</span>kernel, gamma<span class="op">=</span><span class="dv">10</span>)
+clf.fit(X_train, y_train)</code></pre></div>
+<pre><code>SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=None, degree=3, gamma=10, kernel='linear',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">plt.figure(fig_num)
+plt.clf()
+plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span>y, zorder<span class="op">=</span><span class="dv">10</span>, cmap<span class="op">=</span>plt.cm.Paired)
+
+<span class="co"># Circle out the test data</span>
+plt.scatter(X_test[:, <span class="dv">0</span>], X_test[:, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">80</span>, facecolors<span class="op">=</span><span class="st">'none'</span>, zorder<span class="op">=</span><span class="dv">10</span>)
+
+plt.axis(<span class="st">'tight'</span>)
+x_min <span class="op">=</span> X[:, <span class="dv">0</span>].<span class="bu">min</span>()
+x_max <span class="op">=</span> X[:, <span class="dv">0</span>].<span class="bu">max</span>()
+y_min <span class="op">=</span> X[:, <span class="dv">1</span>].<span class="bu">min</span>()
+y_max <span class="op">=</span> X[:, <span class="dv">1</span>].<span class="bu">max</span>()
+
+XX, YY <span class="op">=</span> np.mgrid[x_min:x_max:200j, y_min:y_max:200j]
+Z <span class="op">=</span> clf.decision_function(np.c_[XX.ravel(), YY.ravel()])
+
+<span class="co"># Put the result into a color plot</span>
+Z <span class="op">=</span> Z.reshape(XX.shape)
+plt.pcolormesh(XX, YY, Z <span class="op">&gt;</span> <span class="dv">0</span>, cmap<span class="op">=</span>plt.cm.Paired)
+plt.contour(XX, YY, Z, colors<span class="op">=</span>[<span class="st">'k'</span>, <span class="st">'k'</span>, <span class="st">'k'</span>], linestyles<span class="op">=</span>[<span class="st">'--'</span>, <span class="st">'-'</span>, <span class="st">'--'</span>],
+            levels<span class="op">=</span>[<span class="op">-</span>.<span class="dv">5</span>, <span class="dv">0</span>, .<span class="dv">5</span>])
+
+plt.title(kernel)
+plt.show()</code></pre></div>
+<div class="figure">
+<img src="../images/code6_4.png" alt="Generated Image" />
+<p class="caption">Generated Image</p>
+</div>
+
+
+        </div>
+
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
