@@ -116,13 +116,14 @@ USER $NB_USER
 # Install Python 3 packages
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images
-RUN conda install --quiet --yes \
+RUN conda install --yes \
     'nomkl' \
     'ipywidgets=6.0*' \
     'pandas=0.19*' \
     'numexpr=2.6*' \
     'matplotlib=2.0*' \
-    'scipy=0.19*' \
+    'scipy=0.19*' 
+RUN conda install --yes \
     'seaborn=0.7*' \
     'scikit-learn=0.18*' \
     'scikit-image=0.12*' \
@@ -149,7 +150,7 @@ RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 # Install Python 2 packages
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images
-RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
+RUN conda create  --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'nomkl' \
     'ipython=5.3*' \
     'ipywidgets=6.0*' \
@@ -158,7 +159,7 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'matplotlib=2.0*' \
     'scipy=0.19*' \
     'seaborn=0.7*' \
-    'scikit-learn=0.18*' \
+     'scikit-learn=0.18*' \
     'scikit-image=0.12*' \
     'sympy=1.0*' \
     'cython=0.25*' \
@@ -187,6 +188,9 @@ RUN MPLBACKEND=Agg $CONDA_DIR/envs/python2/bin/python -c "import matplotlib.pypl
 
 # Configure ipython kernel to use matplotlib inline backend by default
 RUN mkdir -p $HOME/.ipython/profile_default/startup
+
+# Configure ipython kernel to use matplotlib inline backend by default
+RUN mkdir -p $HOME/.ipython/profile_default/startup
 COPY mplimporthook.py $HOME/.ipython/profile_default/startup/
 
 USER root
@@ -210,7 +214,7 @@ RUN apt-get update && \
 
 # R packages including IRKernel which gets installed globally.
 RUN conda config --add channels r && \
-    conda install --quiet --yes \
+    conda install --yes \
     'rpy2=2.8*' \
     'r-base=3.3.2' \
     'r-irkernel=0.7*' \
