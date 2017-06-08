@@ -7,4 +7,5 @@ websrc/css/
 websrc/images/
 temp/
 code/.ipy*
+code/examples/.ipy*
 
