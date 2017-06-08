@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Govind Gopakumar</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/syntax.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">/home</a>
+            </div>
+            <div id="navigation">
+                <a href="../codes.html">Codes</a>
+                <a href="../resources.html">Resources</a>
+				<a href="../slides.html">Slides</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Day 9 - Feature Extraction</h1>
+            <div class="info">
+    Posted on June  8, 2017
+    
+        by Govind Gopakumar
+    
+</div>
+
+<p><a href="lec8.pdf">Lecture slides in pdf form</a></p>
+<h1 id="prelude">Prelude</h1>
+<h2 id="announcements">Announcements</h2>
+<ul>
+<li>Programming Tutorial on Ensemble methods, PCA up</li>
+<li>Lecture slides for usage of Neural Network libraries up</li>
+<li>Visual tool to create your own network and train them put up.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<h3 id="svm">SVM</h3>
+<ul>
+<li>Learn “good” lines</li>
+<li>Can be used with the kernel trick</li>
+</ul>
+<h3 id="bagging-and-boosting">Bagging and Boosting</h3>
+<ul>
+<li>How to train multiple unrelated models</li>
+<li>How to train powerful models using weak parts</li>
+</ul>
+<h3 id="neural-networks">Neural networks</h3>
+<ul>
+<li>High level overview of how they work</li>
+<li>Composition of different perceptrons and activations</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<h2 id="how-do-our-algorithms-work">How do our algorithms work?</h2>
+<h3 id="features-in-data">Features in data</h3>
+<ul>
+<li>All of our examples have associated “features”</li>
+<li>We collect these features in a central place</li>
+<li>Our algorithms rely on properties of these features</li>
+</ul>
+<h3 id="matrix-notation">Matrix notation</h3>
+<ul>
+<li>We rely on it being of the form of <span class="math inline">\(NxD\)</span></li>
+<li>Most data in the real world may not be of this form!</li>
+</ul>
+<h2 id="why-do-our-algorithms-work">Why do our algorithms work?</h2>
+<h3 id="geometric-algorithms">Geometric algorithms</h3>
+<ul>
+<li>Linear seperability of the features</li>
+<li>Clustering induced by the features</li>
+<li>High relationship between features and the labels.</li>
+</ul>
+<h3 id="dimensionality-of-features">Dimensionality of features</h3>
+<ul>
+<li>A lot of dimensions can make it a “rich” model</li>
+<li>Comes at computational cost</li>
+<li>Tricks like PCA, Kernel trick allow us to modify as per our problem.</li>
+</ul>
+<h1 id="images">Images</h1>
+<h2 id="why-images">Why images?</h2>
+<h3 id="ubiquity-of-images">Ubiquity of images</h3>
+<ul>
+<li>Cameras on every phone</li>
+<li>Instagram, Facebook all promote and host photos</li>
+<li>Key to understanding the world around us!</li>
+</ul>
+<h3 id="where-will-this-be-useful">Where will this be useful?</h3>
+<ul>
+<li>Face detection algorithms</li>
+<li>Image captioning algorithms</li>
+<li>Self driving cars!</li>
+</ul>
+<h2 id="basics-of-images">Basics of Images</h2>
+<h3 id="image-representation">Image representation</h3>
+<ul>
+<li>Broad distinction : greyscale / color</li>
+<li>Image can be viewed as a giant matrix!</li>
+<li>In case of color, it could even be three matrices.</li>
+</ul>
+<h3 id="image-statistics">Image statistics</h3>
+<ul>
+<li>Image sizes can vary too! (8x8 -&gt; 1000x1000)</li>
+<li>What statistics can we compute?</li>
+</ul>
+<h2 id="simple-image-features---i">Simple Image Features - I</h2>
+<div class="figure">
+<img src="../images/lec9_2.jpg" alt="Night vs Day" />
+<p class="caption">Night vs Day</p>
+</div>
+<h2 id="simple-image-features---ii">Simple Image Features - II</h2>
+<h3 id="night-and-day">Night and day?</h3>
+<ul>
+<li>What were the differences?</li>
+<li>What were same?</li>
+<li>How do we capture this using features?<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></li>
+</ul>
+<h3 id="image-statistics-1">Image statistics?</h3>
+<ul>
+<li>Average color?</li>
+<li>Histogram of colors?</li>
+<li>Variance of colors?</li>
+<li>Majority color?</li>
+</ul>
+<h2 id="are-they-enough">Are they enough?</h2>
+<div class="figure">
+<img src="../images/lec9_1.jpg" alt="Dog vs Girl" />
+<p class="caption">Dog vs Girl</p>
+</div>
+<h2 id="complex-image-features---i">Complex Image Features - I</h2>
+<h3 id="girl-vs-dog">Girl vs Dog?</h3>
+<ul>
+<li>What was same?</li>
+<li>What was different?</li>
+<li>Can we capture this difference in features?<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></li>
+</ul>
+<h3 id="textures-edges-shapes">Textures, edges, shapes</h3>
+<ul>
+<li>What’s a texture?</li>
+<li>What is an edge?</li>
+<li>What are shapes?</li>
+</ul>
+<h2 id="complex-image-features---ii">Complex Image Features - II</h2>
+<h3 id="what-could-we-capture">What could we capture?</h3>
+<ul>
+<li>Edge locations?</li>
+<li>Color changes?</li>
+<li>Local patterns?</li>
+<li>Textures?</li>
+</ul>
+<h3 id="how-do-we-capture-it">How do we capture it?</h3>
+<ul>
+<li>Filtering techniques</li>
+<li>Borrow from image processing</li>
+</ul>
+<h2 id="complex-image-features---iii">Complex Image Features - III</h2>
+<h3 id="filters-feature-detector">Filters / Feature detector</h3>
+<ul>
+<li>Defined by a small matrix</li>
+<li>“Pass” or “convolve” it over the image</li>
+<li>Compute some statistic depending on filter type</li>
+</ul>
+<h3 id="examples-of-filters">Examples of filters</h3>
+<ul>
+<li>Canny filter</li>
+<li>Sobel filter</li>
+<li>Harris filter</li>
+</ul>
+<h2 id="complex-image-features---iv">Complex Image Features - IV</h2>
+<h3 id="d-filtering">1D Filtering</h3>
+<ul>
+<li>Toy example : array of data</li>
+<li>We wish to apply a feature detector to it</li>
+<li>Detector defined by matrix [2, 0, -2]</li>
+</ul>
+<h3 id="example-data">Example data</h3>
+<ul>
+<li>Assume the array is : [1, 2, 3, …., 10, 5, 4, 3, … -3]</li>
+<li>You may have to “pad” the array!</li>
+<li>Where does it spike? What does the output look like?</li>
+</ul>
+<h2 id="complex-image-features---v">Complex Image Features - V</h2>
+<h3 id="applying-a-filter-detector">Applying a filter / detector</h3>
+<ul>
+<li>Put the matrix / filter on each point of the image</li>
+<li>“Convolve” it with the image</li>
+<li>Put output in the same location as original point</li>
+</ul>
+<h3 id="sobel-filter">Sobel filter</h3>
+<ul>
+<li>Defined using two matrices</li>
+<li><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 &amp; -1 \\ 2 &amp; 0 &amp; -2 \\ 1 &amp; 0 &amp; -1 \end{bmatrix}\)</span></li>
+<li>What would this do?</li>
+<li>How do we combine them?</li>
+</ul>
+<h2 id="complex-image-features---vi">Complex Image Features - VI</h2>
+<div class="figure">
+<img src="../images/lec9_3.png" alt="Original Image" />
+<p class="caption">Original Image</p>
+</div>
+<h2 id="complex-image-features---vii">Complex Image Features - VII</h2>
+<div class="figure">
+<img src="../images/lec9_4.png" alt="Filtered Image" />
+<p class="caption">Filtered Image</p>
+</div>
+<h2 id="complex-image-features---viii">Complex Image Features - VIII</h2>
+<h3 id="what-did-that-get-us">What did that get us?</h3>
+<ul>
+<li>Way to find locations of “edges”?</li>
+<li>Now more features are available!</li>
+<li>How do we use them?</li>
+</ul>
+<h3 id="how-can-we-extend-this">How can we extend this?</h3>
+<ul>
+<li>“Corner” discovering filters!</li>
+<li>“Ridge” discovering filters</li>
+</ul>
+<h2 id="complex-image-features---ix">Complex Image Features - IX</h2>
+<h3 id="gradients">Gradients</h3>
+<ul>
+<li>We computed the gradients, can we be smart about it now?</li>
+<li>Simple idea : Don’t use the entire image, aggregate it!</li>
+<li>Worked with color, intensity etc, why not this?</li>
+</ul>
+<h3 id="histogram-of-oriented-gradients">Histogram of Oriented Gradients</h3>
+<ul>
+<li>“HOG” feature</li>
+<li>Aggregation of gradients in an image</li>
+<li>What images will be this useful for?</li>
+</ul>
+<h2 id="complex-image-features---x">Complex Image Features - X</h2>
+<h3 id="how-does-this-generalize">How does this generalize?</h3>
+<ul>
+<li>Curve detection : Filter will describe a curve</li>
+<li>Shape detection : Filter will describe a shape</li>
+</ul>
+<h3 id="how-do-we-choose-these-filters">How do we choose these filters?</h3>
+<ul>
+<li>We generally can’t!</li>
+<li>Only basic ones will be general.</li>
+<li>Can we “learn” these filters from data?</li>
+</ul>
+<h2 id="complex-image-features---xi">Complex Image Features - XI</h2>
+<h3 id="convolutional-neural-networks">Convolutional Neural Networks</h3>
+<ul>
+<li>Layers : Different filters / kernels</li>
+<li>Multiple activations are used</li>
+<li>AlexNet - ~12 layers, ResNet - ~150 layers</li>
+</ul>
+<h3 id="how-do-they-work">How do they work?</h3>
+<ul>
+<li>Low levels learn “edge”, “corner” filters</li>
+<li>High levels combine this information, “shape” filters</li>
+</ul>
+<h2 id="complex-image-fetures---xii">Complex Image Fetures - XII</h2>
+<div class="figure">
+<img src="../images/lec9_5.jpeg" alt="Neural Network visualization" />
+<p class="caption">Neural Network visualization</p>
+</div>
+<h2 id="complex-image-fetures---xiii">Complex Image Fetures - XIII</h2>
+<div class="figure">
+<img src="../images/lec9_6.jpeg" alt="Neural Network visualization" />
+<p class="caption">Neural Network visualization</p>
+</div>
+<h1 id="text">Text</h1>
+<h2 id="why-images-1">Why images?</h2>
+<h3 id="ubiquity-of-text">Ubiquity of text</h3>
+<ul>
+<li>Emails, chats, posts</li>
+<li>News articles, most of the web is text!</li>
+<li>Incorporate more “knowledge” than images at times</li>
+</ul>
+<h3 id="where-will-this-be-useful-1">Where will this be useful?</h3>
+<ul>
+<li>Automatic summarization</li>
+<li>Question answering systems</li>
+<li>Knowledge graph systems</li>
+</ul>
+<h2 id="basics-of-text">Basics of Text</h2>
+<h3 id="what-form-is-text-data-in">What form is text data in?</h3>
+<ul>
+<li>Paragraphs, words</li>
+<li>Composed of a sequence of words, possibly following a grammar</li>
+<li>Differences in spelling, errors, punctuation</li>
+</ul>
+<h3 id="basic-text-features">Basic text features</h3>
+<ul>
+<li>Count vectorizer! - What?</li>
+<li>Stemming - Cluster similar words together</li>
+<li>Stop word removal - Remove useless words</li>
+</ul>
+<h2 id="basic-text-features---i">Basic text features - I</h2>
+<h3 id="one-hot-vectors">One-hot vectors</h3>
+<ul>
+<li>Encode presence / absence of a word</li>
+<li>Either from a dictionary, or from a vocabulary</li>
+<li>Cleaning it up : lemmatizing, stop word removal</li>
+<li>Can even remove very common words</li>
+</ul>
+<h3 id="extensions">Extensions</h3>
+<ul>
+<li>TF : Count of how many times a word appeared in a document</li>
+<li>IDF : <span class="math inline">\(\log\frac{\|D\|}{\|\{d:t\in d\}\|}\)</span></li>
+<li>TF-IDF : TF*IDF</li>
+<li>What does this measure?</li>
+</ul>
+<h2 id="basic-text-features---ii">Basic text features - II</h2>
+<h3 id="toy-example">Toy example</h3>
+<ul>
+<li>Document 1 : { (this, 1), (is, 1), (a, 2), (sample, 1)}</li>
+<li>Document 2 : { (this, 1), (is, 1), (another, 2), (example, 3)}</li>
+</ul>
+<h3 id="computation">Computation</h3>
+<ul>
+<li>TF(“this”, D1) = 0.2</li>
+<li>IDF(“this”) = <span class="math inline">\(\log{\frac{2}{2}} = 0\)</span></li>
+<li>TF(“example”, D2) = 3/7</li>
+<li>IDF(“example”) = 0.301 (log2)</li>
+<li>TFIDF(“example”, D2) = 0.13</li>
+</ul>
+<h2 id="basic-text-features---iii">Basic text features - III</h2>
+<h3 id="what-can-we-do-with-this">What can we do with this?</h3>
+<ul>
+<li>We obtain a vector of values for each document</li>
+<li>Normalizing this, we can actually visualize a geometry!</li>
+<li>Use our favourite classifier on this!</li>
+<li>Dot product gives “similarity” between documents!</li>
+</ul>
+<h3 id="what-information-is-lost">What information is lost?</h3>
+<ul>
+<li>No grammatical structure</li>
+<li>Ordering of words is lost</li>
+</ul>
+<h2 id="basic-text-features---iv">Basic text features - IV</h2>
+<h3 id="extending-these-methods">Extending these methods</h3>
+<ul>
+<li>Count n-grams : Obtain some increased structure</li>
+<li>Cluster similar words together : Allow some leeway in words</li>
+<li>Part of Speech tagging : Split sentences into verbs, nouns etc</li>
+</ul>
+<h3 id="how-far-can-we-go">How far can we go?</h3>
+<ul>
+<li>“Meaning” is hard to justify</li>
+<li>“Grammar” is hard to model</li>
+<li>Statistical techniques can only take us so far!</li>
+</ul>
+<h2 id="advanced-text-features---i">Advanced text features - I</h2>
+<h3 id="where-do-we-go-from-here">Where do we go from here?</h3>
+<ul>
+<li>Learn word “embeddings”</li>
+<li>Google’s “word2vec” model does exactly this.</li>
+<li>Learns from a corpus - Word to vector space mapping</li>
+</ul>
+<h3 id="context-based-modelling">Context based modelling</h3>
+<ul>
+<li>General idea : predict word from context/association</li>
+<li>Train “model” to predict word correctly from noise</li>
+<li>“Learns” semantic relations too (king - man + woman = queen!)</li>
+</ul>
+<h2 id="advanced-text-features---ii">Advanced text features - II</h2>
+<h3 id="results">Results?</h3>
+<ul>
+<li>Learns associations from text</li>
+<li>(Iraq - Violence) = Jordan</li>
+<li>(Human - Animals) = Ethics</li>
+<li>(Rome - Italy) = (Beijing - China)</li>
+</ul>
+<h3 id="usage">Usage?</h3>
+<ul>
+<li>Google’s Machine Translation efforts have drastically improved!</li>
+<li>Real time translation of text, audio, video!</li>
+<li>Automatic summarization improves</li>
+<li>Story writing can also be done!</li>
+</ul>
+<h2 id="advanced-text-features---iii">Advanced text features - III</h2>
+<div class="figure">
+<img src="../images/lec9_7.png" alt="Similarity with Sweden" />
+<p class="caption">Similarity with Sweden</p>
+</div>
+<h2 id="advanced-text-features---iv">Advanced text features - IV</h2>
+<div class="figure">
+<img src="../images/lec9_8.png" alt="Embeddings Learned" />
+<p class="caption">Embeddings Learned</p>
+</div>
+<h1 id="video">Video</h1>
+<h2 id="how-do-we-model-video">How do we model video?</h2>
+<h3 id="as-an-image-itself">As an image itself!</h3>
+<ul>
+<li>Consider a video to be hundreds of images!</li>
+<li>Pro : Adapt techniques in image processing</li>
+<li>Con : Far too much data</li>
+</ul>
+<h3 id="as-a-set-of-moving-images">As a set of moving images</h3>
+<ul>
+<li>Compute “flow” between images</li>
+<li>Identify features based on flow</li>
+<li>Actions : flow in specific regions!</li>
+</ul>
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="concluding-remarks">Concluding Remarks</h2>
+<h3 id="takeaways">Takeaways</h3>
+<ul>
+<li>How to generate features in images</li>
+<li>What to consider when generating features</li>
+<li>What features exist for text data</li>
+</ul>
+<h3 id="announcements-1">Announcements</h3>
+<ul>
+<li>Last class tomorrow - no theory, practical aspects of ML</li>
+<li>Programming tutorials will be uploaded over the next few days</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec24_slides.pdf">Lecture 24, CS 771 IIT Kanpur</a></li>
+</ul>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Image credit : Alexey Kljatov<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Image credit : http://www.guy-sports.com/humor/videos/powerpoint_presentation_dogs.htm<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+
+
+        </div>
+
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
