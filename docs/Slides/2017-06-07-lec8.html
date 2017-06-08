@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Govind Gopakumar</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/syntax.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">/home</a>
+            </div>
+            <div id="navigation">
+                <a href="../codes.html">Codes</a>
+                <a href="../resources.html">Resources</a>
+				<a href="../slides.html">Slides</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Day 8 - SVM, Ensembles, Neural Networks</h1>
+            <div class="info">
+    Posted on June  7, 2017
+    
+        by Govind Gopakumar
+    
+</div>
+
+<p><a href="lec8.pdf">Lecture slides in pdf form</a></p>
+<h1 id="prelude">Prelude</h1>
+<h2 id="announcements">Announcements</h2>
+<ul>
+<li>Doubt clearing session on Thursday (1500 - 1600)</li>
+<li>Programming tutorial on PCA by tomorrow (hopefully)</li>
+<li>Programming tutorial on Kernels (in SVM)</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<h3 id="principal-components-analysis">Principal Components Analysis</h3>
+<ul>
+<li>Captures how the data “spreads”</li>
+<li>Means to reduce dimensionality</li>
+<li>Can capture multiple correlations in the data</li>
+</ul>
+<h3 id="kernels">Kernels</h3>
+<ul>
+<li>Increase dimensionality without actually increasing it</li>
+<li>Works if we require only dot products</li>
+<li>Can learn non-linear surfaces with linear methods!</li>
+</ul>
+<h1 id="support-vector-machines">Support Vector Machines</h1>
+<h2 id="review-of-perceptron">Review of Perceptron</h2>
+<h3 id="model-overview">Model overview</h3>
+<ul>
+<li><span class="math inline">\(\langle w, x\rangle &gt; 0.5, &lt; 0.5\)</span> : decision rule</li>
+<li>Learnt only a hyperplane</li>
+<li>Could be learnt very fast (stochastic method)</li>
+</ul>
+<h3 id="drawbacks">Drawbacks</h3>
+<ul>
+<li>What line does it finally learn?</li>
+<li>Can this line be good? Or bad?</li>
+<li>What line should we learn?</li>
+</ul>
+<h2 id="svm---i">SVM - I</h2>
+<h3 id="background">Background</h3>
+<ul>
+<li>Notion of a “margin”</li>
+<li>When is a line good? When is a line bad?</li>
+<li>Do we increase margin? Or decrease it?</li>
+</ul>
+<h3 id="loss-functions">Loss functions</h3>
+<ul>
+<li>Perceptron loss : <span class="math inline">\(y_n(\langle w, x_n\rangle) \leq 0\)</span></li>
+<li>Can we modify this?</li>
+</ul>
+<h2 id="svm---ii">SVM - II</h2>
+<h3 id="model-overview-1">Model overview</h3>
+<ul>
+<li>Learn a “max margin” line</li>
+<li>Correctly classifies both classes</li>
+<li>Classify them with some distance</li>
+</ul>
+<h3 id="time-complexity">Time complexity?</h3>
+<ul>
+<li>What vectors do I need to specify the model later on?</li>
+<li>“Support Vectors” : how did this come?</li>
+</ul>
+<h2 id="svm---iii">SVM - III</h2>
+<h3 id="learning-the-svm">Learning the SVM?</h3>
+<ul>
+<li>A bit more advanced maths than useful right now</li>
+<li>Can be solved exactly in case of seperable data</li>
+<li>If data isn’t seperable? : “Soft - Margin”</li>
+</ul>
+<h3 id="using-the-svm">Using the SVM</h3>
+<ul>
+<li>Wherever we have linear seperability</li>
+<li>What if we don’t have seperability?</li>
+</ul>
+<h2 id="svm---iv">SVM - IV</h2>
+<h3 id="concluding-remarks">Concluding remarks</h3>
+<ul>
+<li>Extremely popular : You <strong>WILL</strong> see it used everywhere!</li>
+<li>Highly optimized packages available, even in python!</li>
+<li>Active area of research</li>
+</ul>
+<h3 id="but-it-still-learns-a-line">But it still learns a line?</h3>
+<ul>
+<li>Kernel trick!</li>
+<li>Can also be used for regression</li>
+</ul>
+<h1 id="boosting-and-ensembles">Boosting and ensembles</h1>
+<h2 id="ensemble-models---i">Ensemble models - I</h2>
+<h3 id="what">What?</h3>
+<ul>
+<li>What is an “ensemble”?</li>
+<li>How do we construct it?</li>
+<li>Different models on same data vs same model on different data?</li>
+</ul>
+<h3 id="how">How?</h3>
+<ul>
+<li>Aggregate or voting on predictions</li>
+<li>Stack : predictions as features!</li>
+<li>Levels of models!</li>
+</ul>
+<h2 id="ensemble-models---ii">Ensemble models - II</h2>
+<h3 id="bagging">Bagging</h3>
+<ul>
+<li>Create multiple copies of data</li>
+<li>Train similar / same models on these copies</li>
+<li>Aggregate predictions</li>
+</ul>
+<h3 id="why-would-this-work">Why would this work?</h3>
+<ul>
+<li>Each model captures the variance of data</li>
+<li>Noise is spread out, reduced</li>
+<li>How many replications?</li>
+</ul>
+<h2 id="ensemble-models---iii">Ensemble models - III</h2>
+<h3 id="boosting">Boosting</h3>
+<ul>
+<li>Use only weak algorithms</li>
+<li>Combine them iteratively to get better predictions</li>
+<li>Increase weight of hard examples</li>
+</ul>
+<h3 id="process">Process</h3>
+<ul>
+<li>Have <span class="math inline">\(T\)</span> different “weak” models</li>
+<li>Start with uniform weights for all points</li>
+<li>Learn an initial model</li>
+<li>Iteratively increase weights depending on previous mistakes</li>
+<li>Learn better models</li>
+</ul>
+<h2 id="ensemble-models---iv">Ensemble models - IV</h2>
+<h3 id="adaboost">AdaBoost</h3>
+<ul>
+<li>Choose a weak model (Perceptron?)</li>
+<li>Let it learn from data</li>
+<li>Check where it made errors : increase these points!</li>
+<li>Choose another perceptron, learn on new data</li>
+</ul>
+<h3 id="can-it-learn-complicated-shapes">Can it learn complicated shapes?</h3>
+<ul>
+<li>Yes, at times</li>
+<li>Outliers can screw it up a lot at times</li>
+</ul>
+<h2 id="ensemble-models---v">Ensemble models - V</h2>
+<h3 id="comments">Comments</h3>
+<ul>
+<li>Bagging vs Boosting? : no real winner</li>
+<li>Bagging allows parallel learning</li>
+<li>Boosting keeps decreasing training error</li>
+</ul>
+<h3 id="why-should-we-use-either">Why should we use either?</h3>
+<ul>
+<li>Reduce overfitting (multiple models)</li>
+<li>Combine predictions</li>
+</ul>
+<h1 id="neural-networks">Neural Networks</h1>
+<h2 id="review-of-perceptron-1">Review of Perceptron</h2>
+<h3 id="model-overview-2">Model overview</h3>
+<ul>
+<li><span class="math inline">\(\langle w, x\rangle &gt; 0.5, &lt; 0.5\)</span> : decision rule</li>
+<li>Learnt only a hyperplane</li>
+<li>Could be learnt very fast (stochastic method)</li>
+</ul>
+<h3 id="how-did-we-learn-this">How did we learn this?</h3>
+<ul>
+<li>Stochastic Gradient descent</li>
+<li><span class="math inline">\(w^{t+1} = w^{t} - l'(w^t)\)</span></li>
+</ul>
+<h2 id="multi-layer-perceptron---i">Multi layer Perceptron - I</h2>
+<h3 id="structure">Structure</h3>
+<ul>
+<li>Input layer : Where you feed in data</li>
+<li>Output layer : Where you get output (class, value)</li>
+<li>Hidden layer : Middle “layers”</li>
+</ul>
+<h3 id="zooming-in">Zooming in</h3>
+<ul>
+<li>All layers : Composed of nodes</li>
+<li>All nodes : Composed of simple perceptron</li>
+<li>Activation : Perceptron output is “activated”</li>
+</ul>
+<h2 id="multi-layer-perceptron---ii">Multi layer Perceptron - II</h2>
+<h3 id="computation">Computation</h3>
+<ul>
+<li>Each node is like a neuron</li>
+<li>Computes a weighted sum of its inputs</li>
+<li>“Activates” it</li>
+</ul>
+<h3 id="use">Use</h3>
+<ul>
+<li>One hidden layer is enough to approximate any function!</li>
+<li>Chain together “deep” and “wide” networks</li>
+</ul>
+<h2 id="multi-layer-perceptron---iii">Multi layer Perceptron - III</h2>
+<h3 id="feature-extraction">Feature extraction</h3>
+<ul>
+<li>Lower layers “learn” smaller features</li>
+<li>Higher layers “learn” larger features</li>
+</ul>
+<h3 id="activation-functions">Activation functions</h3>
+<ul>
+<li>Normal perceptron uses step function (0-1)</li>
+<li>Sigmoid function</li>
+<li>ReLU function</li>
+<li>Why are non-linear functions needed?</li>
+</ul>
+<h2 id="multi-layer-perceptron---iv">Multi layer Perceptron - IV</h2>
+<h3 id="feedforward">Feedforward</h3>
+<ul>
+<li>Input is passed through the network, layer by layer</li>
+<li><span class="math inline">\(x \rightarrow f(W^Tx) \rightarrow g(V^Tf(W^Tx)) \rightarrow \dots\)</span></li>
+<li>Weighted sum followed by activation</li>
+</ul>
+<h3 id="large-networks">Large networks</h3>
+<ul>
+<li>Deep : Multiple layers</li>
+<li>Wide : Multiple nodes within layers</li>
+</ul>
+<h2 id="multi-layer-perceptron---v">Multi layer Perceptron - V</h2>
+<h3 id="how-do-we-learn-this">How do we learn this?</h3>
+<ul>
+<li>What are the unknowns?</li>
+<li>What is the loss function?</li>
+<li>Can we do gradient descent?</li>
+</ul>
+<h3 id="backpropagation">Backpropagation</h3>
+<ul>
+<li>Push errors / updates through the network</li>
+<li>Use “chain rule” from calculus to derive gradients!</li>
+</ul>
+<h2 id="multi-layer-perceptron---vi">Multi layer Perceptron - VI</h2>
+<h3 id="backpropagation-1">Backpropagation</h3>
+<ul>
+<li>Compute gradients starting from last layer</li>
+<li>Compute next set of gradients step by step</li>
+</ul>
+<h3 id="example-network">Example network</h3>
+<ul>
+<li>Regression problem : <span class="math inline">\(y = f(X)\)</span></li>
+<li>Two layers : <span class="math inline">\(y_i = V^Tf(W^Tx_i)\)</span></li>
+</ul>
+<h2 id="multi-layer-perceptron---vii">Multi layer Perceptron - VII</h2>
+<h3 id="backpropagation-of-errors">Backpropagation of errors</h3>
+<ul>
+<li>Loss function : <span class="math inline">\(\min_{W, V} \sum \left( y_i - V^T f(W^T x_i)\right)^2\)</span></li>
+<li>Let us look at it as : <span class="math inline">\(\sum (y_i - \langle V, h_i \rangle)^2\)</span></li>
+<li>Gradient w.r.t <span class="math inline">\(V\)</span> is easy : <span class="math inline">\(\frac{\partial L}{\partial V} = -2\sum(y_i - \langle V, h_i \rangle)h_i\)</span></li>
+<li>Simple form : <span class="math inline">\(-2\sum e_n h_n\)</span></li>
+</ul>
+<h3 id="chain-rule">Chain rule</h3>
+<ul>
+<li>We now need to update <span class="math inline">\(W\)</span> as well - Chain rule</li>
+<li><span class="math inline">\(\frac{\partial L}{\partial W} = \frac{\partial L}{\partial f} \frac{\partial f}{\partial W}\)</span></li>
+<li><span class="math inline">\(\frac{\partial L}{\partial f_k} = - \sum e_n v_k\)</span></li>
+<li><span class="math inline">\(\frac{\partial f}{\partial W} = \sum f'(w_k^tx_n)\)</span></li>
+</ul>
+<h2 id="multi-layer-perceptron---vii-1">Multi layer Perceptron - VII</h2>
+<h3 id="backpropagation-2">Backpropagation</h3>
+<ul>
+<li>Compute forward pass : error at output layer</li>
+<li>Compute backward pass : gradients at each layer</li>
+<li>Update parameter at each backward pass</li>
+</ul>
+<h3 id="computational-issues">Computational issues</h3>
+<ul>
+<li>Update of parameter at layer <span class="math inline">\(i\)</span> depends on <span class="math inline">\(i+1\)</span></li>
+<li>Parallel updates if we have multiple nodes!</li>
+</ul>
+<h2 id="multi-layer-perceptron---viii">Multi layer Perceptron - VIII</h2>
+<h3 id="so-why-the-hype">So why the hype?</h3>
+<ul>
+<li>Chaining layers increases power</li>
+<li>Extremely fast computation on GPUs</li>
+<li>Extremely powerful structures can be learnt!</li>
+</ul>
+<h3 id="is-the-hype-justified">Is the hype justified?</h3>
+<ul>
+<li>Overall loss is extremely non-convex</li>
+<li>Sometimes blind usage is promoted!</li>
+<li>Theory is not very well developed</li>
+</ul>
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="concluding-remarks-1">Concluding Remarks</h2>
+<h3 id="takeaways">Takeaways</h3>
+<ul>
+<li>Combining different methods</li>
+<li>Boosting, Bagging</li>
+<li>SVM : Powerful lines!</li>
+<li>MLP : The most powerful machine learning tool known to us!</li>
+</ul>
+<h3 id="announcements-1">Announcements</h3>
+<ul>
+<li>Doubt clearing session tomorrow : come with doubts!</li>
+<li>Tutorials for SVM + Kernel up</li>
+<li>Will put up tutorial for Kernels in other methods</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec21_slides.pdf">Lecture 21, CS 771 IIT Kanpur</a></li>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec8_slides.pdf">Lecture 8, CS 771 IIT Kanpur</a></li>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec23_slides.pdf">Lecture 23, CS 771 IIT Kanpur</a></li>
+</ul>
+
+
+        </div>
+
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
