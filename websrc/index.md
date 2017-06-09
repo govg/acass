@@ -11,11 +11,14 @@ Theory and Practice. Please follow the links you can see around you to navigate.
 - [Post course feedback](http://goo.gl/eR09vK) : Please fill this extremely short survey if you were
  part of my class. It would help in improving the offering of this course in the future, as well as
  provide me with feedback. 
+
 - Programming tutorials for (PCA, SVM with Kernels, Adaboost) are all up. Please find them from the
  code tab to your top right.
+
 - Some students have mentioned the difficulty in downloading Anaconda. I have hosted a local copy
  [here](http://web.cse.iitk.ac.in/users/govindg/temp/). Please install the relevant package for 
  your architecture. 
+
 - Programming Assignment 2 is up. Please find it in the "Code" tabe to the top right. It is
 	meant as an introduction to gradient descent and loss functions. Please let me know if there
 	are any errors in the code, since I can't claim to be an expert at coding.
