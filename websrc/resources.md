@@ -76,7 +76,15 @@ to see the power, on different kinds of datasets. This is an amazing tool to und
 - [Jupyter Notebook](https://try.jupyter.org/) : lets you create online jupyter notebooks. You can 
  try out the majority of tutorials I have posted using this tool.
 
+- [Stanford Tensorflow course](http://web.stanford.edu/class/cs20si/syllabus.html) This should be a 
+good place to start for all of your neural network needs.
+
+- [Tensorflow 1](https://docs.google.com/presentation/d/1Kvo-Mq0cqnBHJrTHc51wWDC3cfvYsPDR3owP8LjqNhg/edit#slide=id.gc6f73a04f_0_0) : Part 1 of an introduction to Tensorflow, by Aadil. 
+
+- [Tensorflow 2](https://docs.google.com/presentation/d/1_tRL4wEdZiQdVU64Q9DADWkigji2ih_en_7ZRkO-nt8/edit#slide=id.g203e5a7ae5_0_50) : Part 2 of an introduction to Tensorflow, by Aadil.
+
 ---
+
 
 Other resources shall be put up later.
 
