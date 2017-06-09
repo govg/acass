@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Govind Gopakumar</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/syntax.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">/home</a>
+            </div>
+            <div id="navigation">
+                <a href="../codes.html">Codes</a>
+                <a href="../resources.html">Resources</a>
+				<a href="../slides.html">Slides</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Day 10 - Practical ML and wrap up</h1>
+            <div class="info">
+    Posted on June  9, 2017
+    
+        by Govind Gopakumar
+    
+</div>
+
+<p><a href="lec10.pdf">Lecture slides in pdf form</a></p>
+<h1 id="prelude">Prelude</h1>
+<h2 id="announcements">Announcements</h2>
+<ul>
+<li>Tutorial on PCA up</li>
+<li>Datasets have been uploaded</li>
+<li>Tutorial on AdaBoost up</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<h3 id="features-in-images">Features in Images</h3>
+<ul>
+<li>Basic image features</li>
+<li>Edges, shapes</li>
+<li>Learning them (high level overview)</li>
+</ul>
+<h3 id="features-in-text">Features in Text</h3>
+<ul>
+<li>Basic text level features</li>
+<li>Converting a sentence / document to a vector</li>
+<li>Converting words to vectors (high level overview)</li>
+</ul>
+<h1 id="performance-measures">Performance measures</h1>
+<h2 id="learning-with-imbalanced-data---i">Learning with imbalanced data - I</h2>
+<h3 id="whats-the-issue">What’s the issue?</h3>
+<ul>
+<li>Algorithms measure loss</li>
+<li>Depends implicitly on the balance of data</li>
+<li>Example of this?</li>
+</ul>
+<h3 id="how-do-we-ignore-this">How do we ignore this?</h3>
+<ul>
+<li>Classifier performs reasonably well!</li>
+<li>99% accuracy. But what is the actual accuracy?</li>
+</ul>
+<h2 id="learning-with-imbalanced-data---ii">Learning with imbalanced data - II</h2>
+<h3 id="modify-the-loss-function">Modify the loss function</h3>
+<ul>
+<li>Look carefully at the loss, add weight to smaller set</li>
+<li>Penalize making mistakes more on smaller class</li>
+</ul>
+<h3 id="examples">Examples?</h3>
+<ul>
+<li>Perceptron loss : Increase <span class="math inline">\(\eta\)</span>, maybe?</li>
+<li>Pairwise losses?</li>
+</ul>
+<h2 id="learning-with-imbalanced-data---iii">Learning with imbalanced data - III</h2>
+<h3 id="subsample-data">Subsample data</h3>
+<ul>
+<li>Drop a lot of positive examples</li>
+<li>Train multiple times, but with equal positive and negative?</li>
+</ul>
+<h3 id="oversample-data">Oversample data</h3>
+<ul>
+<li>Copy negative examples!</li>
+<li>Care must be taken, think carefully about the algorithm!</li>
+</ul>
+<h1 id="cross-validation">Cross validation</h1>
+<h2 id="how-do-we-choose-the-right-model---i">How do we choose the right model? - I</h2>
+<h3 id="importance-of-cross-validation">Importance of cross validation</h3>
+<ul>
+<li>Train on training data set</li>
+<li>Test on testing data set</li>
+<li>But choosing model? - validation set!</li>
+</ul>
+<h3 id="validation">Validation</h3>
+<ul>
+<li>General idea : leave some data out for “testing” before testing!</li>
+<li>Multiple versions of cross validation</li>
+</ul>
+<h2 id="how-do-we-choose-the-right-model---ii">How do we choose the right model? - II</h2>
+<h3 id="held-out-data">Held out data</h3>
+<ul>
+<li>Set aside some part of the training data</li>
+<li>Test multiple models on this “held out” dataset</li>
+<li>Choose best performing model!</li>
+</ul>
+<h3 id="specific-types">Specific types</h3>
+<ul>
+<li>K-fold : Create K splits</li>
+<li>LOO : Leave aside 1 example</li>
+<li>Random subsample : Choose random subset as validation</li>
+</ul>
+<h1 id="heuristics-to-help">Heuristics to help</h1>
+<h2 id="bias-variance-tradeoff---i">Bias Variance tradeoff - I</h2>
+<h3 id="what-are-these-terms">What are these terms?</h3>
+<ul>
+<li>Bias : How inherently weak / strong your model is</li>
+<li>Variance : How unstable / stable your model is with data</li>
+</ul>
+<h3 id="how-are-they-important">How are they important?</h3>
+<ul>
+<li>Bias : You might be underfitting!</li>
+<li>Variance : You might be overfitting!</li>
+</ul>
+<h2 id="bias-variance-tradeoff---ii">Bias Variance tradeoff - II</h2>
+<h3 id="in-practice">In practice</h3>
+<ul>
+<li>Decreasing bias (increase complexity) : probably increase variance!</li>
+<li>Decreasing variance : might increase bias!</li>
+</ul>
+<h3 id="choose-appropriate-models">Choose appropriate models</h3>
+<ul>
+<li>Plot training error, validation error, test error</li>
+<li>Understand complexity of data vs model!</li>
+</ul>
+<h2 id="debugging-algorithms">Debugging algorithms</h2>
+<h3 id="more-data-vs-richer-model">More data vs Richer model</h3>
+<ul>
+<li>Data can’t decrease bias, but can decrease variance</li>
+<li>Model can’t decrease variance generally, but can decrease bias!</li>
+</ul>
+<h3 id="questions-to-ask">Questions to ask</h3>
+<ul>
+<li>Is the optimization not being done properly?</li>
+<li>Is the model appropriate?</li>
+<li>Is the data too simple or too complex?</li>
+</ul>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="figure">
+<img src="../images/lec10_3.png" alt="Scikit Learn cheat sheet" />
+<p class="caption">Scikit Learn cheat sheet</p>
+</div>
+<h1 id="course-review">Course review</h1>
+<h2 id="some-that-were-covered">Some that were covered</h2>
+<h3 id="learning">Learning</h3>
+<ul>
+<li>KNN, Decision Trees</li>
+<li>Linear Regression, Matrix Factorization</li>
+<li>Logistic Regression, Perceptron</li>
+<li>Multilayer Perceptrons, Neural Networks</li>
+<li>Clustering, Dimensionality Reduction</li>
+</ul>
+<h3 id="misc">Misc</h3>
+<ul>
+<li>Extracting from images, text</li>
+<li>Combining models</li>
+</ul>
+<h2 id="some-that-couldnt-be-covered">Some that couldn’t be covered</h2>
+<ul>
+<li><strong>Semi Supervised Learning</strong> : Training examples may all not have labels</li>
+<li><strong>Reinforcement Learning</strong> : Action - reward model</li>
+<li><strong>Online Learning</strong> : Continuously predict / obtain loss</li>
+<li><strong>Time series</strong> : Modelling time varying data like stock prices</li>
+</ul>
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="course-objectives---i">Course objectives - I</h2>
+<ul>
+<li>Understand basic tools in Machine Learning</li>
+<li>Recognize the need and suitability of models</li>
+<li>Be able to apply basic techniques and get reasonable results</li>
+<li>Have enough background to explore advanced methods, maybe research</li>
+<li>Read articles about the dangers of AI in newspapers and understand why they’re (probably) wrong.</li>
+</ul>
+<h2 id="course-objectives---ii">Course objectives - II</h2>
+<div class="figure">
+<img src="../images/lec10_2.jpg" alt="What ML is" />
+<p class="caption">What ML is</p>
+</div>
+<h2 id="hopeful-takeaways---i">Hopeful takeaways - I</h2>
+<h3 id="model-geometry-and-intuition">Model geometry and intuition</h3>
+<ul>
+<li>Try to explore data and see how it “lies”</li>
+<li>Understand limitations and powers of each model</li>
+<li>Come up with good “features”, try various techniques</li>
+</ul>
+<h3 id="modelling-choies">Modelling choies</h3>
+<ul>
+<li>Understand when more power is necessary and when not</li>
+<li>Not blindly apply powerful tools (basically neural networks)</li>
+</ul>
+<h2 id="hopeful-takeaways---ii">Hopeful takeaways - II</h2>
+<div class="figure">
+<img src="../images/lec10_1.png" alt="Somewhere between the two" />
+<p class="caption">Somewhere between the two</p>
+</div>
+<h2 id="wrapping-up">Wrapping up</h2>
+<h3 id="notes">Notes</h3>
+<ul>
+<li>Website will remain up (govg.github.io/acass)</li>
+<li>Programming resources will be completed by weekend</li>
+<li>Not sure if a quiz is needed?</li>
+<li>Post course feedback form up (please let me know)</li>
+<li>Projects (please continue till you get a “feel” for your data)</li>
+<li>Contact for any query (govindg@cse.iitk.ac.in)</li>
+</ul>
+<h2 id="thank-you">Thank you!</h2>
+<div class="figure">
+<img src="../images/lec10_5.png" alt="Data Science" />
+<p class="caption">“Data Science”</p>
+</div>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec19_slides.pdf">Lecture 19, CS 771 IIT Kanpur</a></li>
+<li><a href="https://cse.iitk.ac.in/users/piyush/courses/ml_autumn16/771A_lec25_slides.pdf">Lecture 25, CS 771 IIT Kanpur</a></li>
+</ul>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<ul>
+<li>Pic 1 : Scikit learn documentation</li>
+<li>Pic 2 : Unknown User on Pinterest</li>
+<li>Pic 3 : Reddit /r/machinelearning</li>
+<li>Pic 4 : XKCD.com</li>
+</ul>
+
+
+        </div>
+
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
